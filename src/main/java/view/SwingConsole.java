@@ -13,6 +13,8 @@ public class SwingConsole {
                 f.setVisible(true);
             }
         });
+
     }
+
 
 }

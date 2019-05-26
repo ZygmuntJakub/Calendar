@@ -9,6 +9,9 @@ public class CalendarApplication {
 
     public static void main(String[] args) {
         Locale.setDefault(new Locale("pl", "PL"));
-        SwingConsole.run(new MainWindow(), 800, 600);
+        MainWindow mainWindow = new MainWindow();
+        Menu menu = new Menu();
+        mainWindow.setJMenuBar(menu);
+        SwingConsole.run(mainWindow, 960, 600);
     }
 }

@@ -1,13 +1,12 @@
 package view;
 
 import com.toedter.calendar.JCalendar;
+import model.Languages;
 
 import javax.swing.*;
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class SwingCalendar extends JPanel {
@@ -22,6 +21,7 @@ public class SwingCalendar extends JPanel {
                 System.out.println(c.getTime());
             }
         });
+        changeVisible(false);
         add(calendar);
     }
 
