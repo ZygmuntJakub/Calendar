@@ -1,16 +1,19 @@
 package view;
 
+import view.services.ButtonLanguageListener;
+
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.*;
 
 public class MainWindow extends JFrame {
 
 
-
+    JProgressBar pBar = new JProgressBar();
     Label title = new Label("Witaj w Kalendarzu: Nieznajomy");
     Label loginLabel = new Label("Login: \n");
     Label color = new Label("Kolor: ");
@@ -26,7 +29,10 @@ public class MainWindow extends JFrame {
 
     JTextField loginField = new JTextField(10);
 
+    Timer timer;
+
     MainWindow(){
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         class FieldLoginListener implements DocumentListener { //klasa lokalna
 
@@ -50,6 +56,25 @@ public class MainWindow extends JFrame {
         }
 
         setLayout(new FlowLayout());
+
+        setUpBar();
+        add(pBar);
+        ActionListener pBarLoading = new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                if(pBar.getValue() < 100){
+                    SwingCalendar.changeVisible(false);
+                    pBar.setValue(pBar.getValue() + 10);
+                } else{
+                    timer.stop();
+                    pBar.setVisible(false);
+                    SwingCalendar.changeVisible(true);
+                }
+            }
+        };
+        timer = new Timer(200, pBarLoading);
+        timer.setRepeats(true);
+        timer.start();
+
 
         colorGroup.add(dark);
         colorGroup.add(white);
@@ -115,5 +140,9 @@ public class MainWindow extends JFrame {
         {
             System.out.println("Mysz kliknięta w punkcie " + e.getX() + ", " + e.getY());
         }
+    }
+    private void setUpBar(){
+        pBar.setValue(0);
+        pBar.setStringPainted(true);
     }
 }
