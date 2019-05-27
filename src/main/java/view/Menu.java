@@ -8,7 +8,8 @@ import java.awt.event.KeyEvent;
 public class Menu extends JMenuBar {
 
     JMenu menu, submenu;
-    JMenuItem menuItem;
+    JMenuItem authors;
+    JMenuItem save;
 
     public Menu() {
 
@@ -17,13 +18,22 @@ public class Menu extends JMenuBar {
         menu.getAccessibleContext().setAccessibleDescription(
                 "Główne menu kalendarza");
         add(menu);
-        menuItem = new JMenuItem("Autorzy",
+
+        setUpAuthors();
+        setUpSave();
+
+        menu.add(authors);
+        menu.add(save);
+    }
+
+    private void setUpAuthors(){
+        authors = new JMenuItem("Autorzy",
                 KeyEvent.VK_T);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+        authors.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription(
+        authors.getAccessibleContext().setAccessibleDescription(
                 "Informacje na temat autorów");
-        menuItem.addActionListener(new ActionListener() {
+        authors.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ImageIcon icon = new ImageIcon("icon.png");
@@ -31,8 +41,22 @@ public class Menu extends JMenuBar {
                         "Autorzy", JOptionPane.INFORMATION_MESSAGE, icon);
             }
         });
-        menu.add(menuItem);
+    }
 
-
+    private void setUpSave(){
+        save = new JMenuItem("Zapisz",
+                KeyEvent.VK_1);
+        save.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        save.getAccessibleContext().setAccessibleDescription(
+                "Zapisz stan aplikacji");
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SaveWindow saveWindow = new SaveWindow();
+                saveWindow.setVisible(true);
+                SwingConsole.run(saveWindow, 300, 300);
+            }
+        });
     }
 }

@@ -12,6 +12,7 @@ import java.awt.event.*;
 
 public class MainWindow extends JFrame {
 
+
     JProgressBar pBar = new JProgressBar();
     Label title = new Label("Witaj w Kalendarzu: Nieznajomy");
     Label loginLabel = new Label("Login: \n");
@@ -31,6 +32,7 @@ public class MainWindow extends JFrame {
     Timer timer;
 
     MainWindow(){
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         class FieldLoginListener implements DocumentListener { //klasa lokalna
 
