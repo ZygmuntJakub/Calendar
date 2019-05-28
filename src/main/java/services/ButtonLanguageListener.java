@@ -1,4 +1,4 @@
-package view.services;
+package services;
 
 import model.Languages;
 import view.SwingCalendar;
