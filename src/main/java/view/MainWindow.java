@@ -34,17 +34,14 @@ public class MainWindow extends JFrame {
 
         class FieldLoginListener implements DocumentListener { //klasa lokalna
 
-            @Override
             public void insertUpdate(DocumentEvent e) {
                 updateFieldState();
             }
-
-            @Override
+            
             public void removeUpdate(DocumentEvent e) {
                 updateFieldState();
             }
 
-            @Override
             public void changedUpdate(DocumentEvent e) {
                 updateFieldState();
             }
@@ -86,7 +83,6 @@ public class MainWindow extends JFrame {
         loginField.getDocument().addDocumentListener(new FieldLoginListener());
 
         calendarVisible.addItemListener(new ItemListener() { //klasa anonimowa
-            @Override
             public void itemStateChanged(ItemEvent e) {
                 Object source = e.getItemSelectable();
 
@@ -124,7 +120,6 @@ public class MainWindow extends JFrame {
 
     class RadioColorListener implements ActionListener{ //klasa wewnętrzna
 
-        @Override
         public void actionPerformed(ActionEvent e) {
             String choose = e.getActionCommand();
 

@@ -34,7 +34,6 @@ public class Menu extends JMenuBar {
         authors.getAccessibleContext().setAccessibleDescription(
                 "Informacje na temat autorów");
         authors.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 ImageIcon icon = new ImageIcon("icon.png");
                 JOptionPane.showMessageDialog(null, "Autorzy: \nJakub Nozderka\nJakub Zygmunt",
@@ -51,7 +50,6 @@ public class Menu extends JMenuBar {
         save.getAccessibleContext().setAccessibleDescription(
                 "Zapisz stan aplikacji");
         save.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 SaveWindow saveWindow = new SaveWindow();
                 saveWindow.setVisible(true);

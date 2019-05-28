@@ -17,7 +17,6 @@ public class SwingCalendar extends JPanel {
     SwingCalendar(){
 
         calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
-            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 final Calendar c = (Calendar) evt.getNewValue();
                 System.out.println(c.getTime());
