@@ -15,8 +15,12 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener {
     private JButton newEvent;
     JComponent editComponent;
     JTextField title;
+    JTextField place;
+    JTextField hour;
     JTextArea desc;
     JDateChooser dateChooser;
+
+
 
     private JList list;
     private JSplitPane splitPane;
@@ -35,19 +39,26 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener {
         Container container = new Container();
 
         editComponent = new JPanel();
-        editComponent.setLayout(new GridLayout(5,1));
+        editComponent.setLayout(new GridLayout(7,1));
         save = new JButton("Zapisz");
         newEvent = new JButton("Nowe wydarzenie");
         title = new JTextField("", 15);
         desc = new JTextArea("", 15, 10);
         dateChooser = new JDateChooser();
         dateChooser.setCalendar(calendar);
+        place = new JTextField("", 15);
+        hour = new JTextField("", 15);
+
         editComponent.add(new JLabel("Tytuł:"));
         editComponent.add(title);
         editComponent.add(new JLabel("Opis:"));
         editComponent.add(desc);
         editComponent.add(new JLabel("Data:"));
         editComponent.add(dateChooser);
+        editComponent.add(new JLabel("Godzina:"));
+        editComponent.add(hour);
+        editComponent.add(new JLabel("Miejsce:"));
+        editComponent.add(place);
         editComponent.add(save);
         editComponent.add(newEvent);
 

@@ -1,9 +1,6 @@
 package services;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseService {
 
@@ -19,6 +16,7 @@ public class DatabaseService {
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(dbPath, "root", "qwsaaswq");
+            stmt = con.createStatement();
         }
         catch (Exception e)
         {
@@ -26,7 +24,7 @@ public class DatabaseService {
         }
     }
 
-    private void disconnect()
+    public void disconnect()
     {
         if (con != null)
         {
@@ -36,5 +34,31 @@ public class DatabaseService {
             }
             catch(Exception e) {}
         }
+    }
+
+    public Statement getStmt() {
+        return stmt;
+    }
+
+    public void setStmt(Statement stmt) {
+        this.stmt = stmt;
+    }
+
+    public ResultSet getRs() {
+        return rs;
+    }
+
+    public void setRs(ResultSet rs) {
+        this.rs = rs;
+    }
+
+    public ResultSet executeQuery(String sqlQuery){
+        ResultSet resultSet = null;
+        try {
+            resultSet = stmt.executeQuery(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
     }
 }
