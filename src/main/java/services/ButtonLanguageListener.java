@@ -1,7 +1,7 @@
 package services;
 
 import model.Languages;
-import view.SwingCalendar;
+import view.GUI.SwingCalendar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

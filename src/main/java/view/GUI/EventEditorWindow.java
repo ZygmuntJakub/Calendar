@@ -1,4 +1,4 @@
-package view;
+package view.GUI;
 
 import com.github.lgooddatepicker.components.TimePicker;
 import com.toedter.calendar.JDateChooser;

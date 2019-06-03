@@ -6,18 +6,14 @@ import java.util.Calendar;
 public class Event {
     private String title;
     private String description;
-    private Calendar dateStart;
-    private Calendar dateEnd;
+    private Calendar eventDate;
     private Duration duration;
+    private String place;
 
-
-    String place;
-
-    public Event(String title, String description, Calendar date, Calendar dateEnd, Duration duration, String place) {
-        this.dateEnd = dateEnd;
+    public Event(String title, String description, Calendar date, Duration duration, String place) {
         this.setTitle(title);
         this.setDescription(description);
-        this.dateStart = date;
+        this.eventDate = date;
         this.place = place;
         this.duration = duration;
     }
@@ -49,7 +45,7 @@ public class Event {
     }
 
     public Calendar getDate() {
-        return dateStart;
+        return eventDate;
     }
 
     public void setDate(Calendar date) {
@@ -58,7 +54,7 @@ public class Event {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        this.dateStart = date;
+        this.eventDate = date;
     }
 
     public String getPlace() {
@@ -71,14 +67,14 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event [title=" + title + ", description=" + description + ", date=" + dateStart + "]";
+        return "Event [title=" + title + ", description=" + description + ", date=" + eventDate + "]";
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((dateStart == null) ? 0 : dateStart.hashCode());
+        result = prime * result + ((eventDate == null) ? 0 : eventDate.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         return result;
@@ -93,10 +89,10 @@ public class Event {
         if (getClass() != obj.getClass())
             return false;
         Event other = (Event) obj;
-        if (dateStart == null) {
-            if (other.dateStart != null)
+        if (eventDate == null) {
+            if (other.eventDate != null)
                 return false;
-        } else if (!dateStart.equals(other.dateStart))
+        } else if (!eventDate.equals(other.eventDate))
             return false;
         if (description == null) {
             if (other.description != null)
@@ -119,11 +115,4 @@ public class Event {
         this.duration = duration;
     }
 
-    public Calendar getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(Calendar dateEnd) {
-        this.dateEnd = dateEnd;
-    }
 }

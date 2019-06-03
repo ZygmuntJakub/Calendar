@@ -1,4 +1,4 @@
-package view;
+package view.GUI;
 
 import services.ButtonLanguageListener;
 
@@ -103,7 +103,7 @@ public class MainWindow extends JFrame {
 				}
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					SwingCalendar.changeVisible(false);
-					calendarVisible.setText("Poka¿ kalendarz");
+					calendarVisible.setText("Pokaï¿½ kalendarz");
 				}
 
 			}
@@ -144,7 +144,7 @@ public class MainWindow extends JFrame {
 	class MouseHandler extends MouseAdapter // klasa adaptacyjna
 	{
 		public void mouseClicked(MouseEvent e) {
-			System.out.println("Mysz klikniêta w punkcie " + e.getX() + ", " + e.getY());
+			System.out.println("Mysz klikniï¿½ta w punkcie " + e.getX() + ", " + e.getY());
 		}
 	}
 
