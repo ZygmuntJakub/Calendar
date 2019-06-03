@@ -1,5 +1,6 @@
 package view;
 
+import com.github.lgooddatepicker.components.TimePicker;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -13,12 +14,12 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener {
 
     private JButton save;
     private JButton newEvent;
-    JComponent editComponent;
-    JTextField title;
-    JTextField place;
-    JTextField hour;
-    JTextArea desc;
-    JDateChooser dateChooser;
+    private JComponent editComponent;
+    private JTextField title;
+    private JTextField place;
+    private JTextArea desc;
+    private JDateChooser dateChooser;
+    private com.github.lgooddatepicker.components.TimePicker timePicker;
 
 
 
@@ -47,7 +48,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener {
         dateChooser = new JDateChooser();
         dateChooser.setCalendar(calendar);
         place = new JTextField("", 15);
-        hour = new JTextField("", 15);
+        timePicker = new TimePicker();
 
         editComponent.add(new JLabel("Tytuł:"));
         editComponent.add(title);
@@ -56,7 +57,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener {
         editComponent.add(new JLabel("Data:"));
         editComponent.add(dateChooser);
         editComponent.add(new JLabel("Godzina:"));
-        editComponent.add(hour);
+        editComponent.add(timePicker);
         editComponent.add(new JLabel("Miejsce:"));
         editComponent.add(place);
         editComponent.add(save);
