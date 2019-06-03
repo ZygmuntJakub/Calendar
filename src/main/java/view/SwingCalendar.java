@@ -21,7 +21,7 @@ public class SwingCalendar extends JPanel {
                 final Calendar c = (Calendar) evt.getNewValue();
                 System.out.println(c.getTime());
                 EventEditorWindow eventEditorWindow = new EventEditorWindow(c);
-                SwingConsole.run(eventEditorWindow, 500, 300);
+                SwingConsole.run(eventEditorWindow, 800, 500);
             }
         });
         changeVisible(false);
