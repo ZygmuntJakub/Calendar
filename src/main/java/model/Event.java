@@ -67,7 +67,13 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event [title=" + title + ", description=" + description + ", date=" + eventDate + "]";
+        return "Event{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", eventDate=" + eventDate +
+                ", duration=" + duration +
+                ", place='" + place + '\'' +
+                '}';
     }
 
     @Override

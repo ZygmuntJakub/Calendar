@@ -2,51 +2,71 @@ package controller;
 
 import model.Event;
 import services.DatabaseService;
+import view.GUI.EventEditorWindow;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class DatabaseController implements RepoController<Event, Integer> {
-
-    DatabaseService databaseService;
+public class DatabaseController{
+    private DatabaseService databaseService;
 
     public DatabaseController(){
         databaseService = new DatabaseService();
     }
 
-
-    @Override
-    public void add(Event event) throws SQLException {
-
-
-    }
-
-    @Override
-    public void delete(Event event) {
-
-    }
-
-    @Override
-    public void modifyByIndex(int index, Event event) {
-
-    }
-
-    @Override
-    public Event getEvent(int i) throws SQLException {
+    public void saveToDataBase(){
         databaseService.connect();
 
-        ResultSet resultSet = databaseService.executeQuery("SELECT * FROM Events;");
-        while(resultSet.next()){
-            System.out.println(resultSet.getString("name"));
+        List<Event> events = EventEditorWindow.repoController.getAll();
+        String query;
+        databaseService.resetDatabase();
+        for (Event e : events) {
+            query =
+                    "INSERT INTO Events(title, description, date, alertBefore, place) VALUES ('" +
+                            e.getTitle() + "', '" + e.getDescription() + "', '" +
+                            new Timestamp(e.getDate().getTimeInMillis()) + "', '" +
+                            e.getDuration().toMinutes() + "', '" +
+                            e.getPlace()+ "');";
+            databaseService.executeUpdate(query);
         }
 
         databaseService.disconnect();
-        return null;
     }
+    private List<Event> getAllEvents() throws Error
+    {
+        databaseService.connect();
 
-    @Override
-    public List<Event> getAll() {
-        return null;
+        List<Event> base = new ArrayList<Event>();
+
+        try
+        {
+            String query = "SELECT * FROM Events";
+            ResultSet rs = databaseService.executeQuery(query);
+
+            while (rs.next())
+            {
+                Timestamp timestamp = Timestamp.valueOf(rs.getString(4));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(timestamp.getTime());
+                Event E = new Event(rs.getString(2), rs.getString(3), calendar, Duration.ofMinutes(Long.valueOf(rs.getString(5))), rs.getString(6));
+                base.add(E);
+            }
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        databaseService.disconnect();
+
+        return base;
+    }
+    public void loadAndOverrideDataFromDatabase(){
+        EventEditorWindow.repoController.changeListData(getAllEvents());
     }
 }

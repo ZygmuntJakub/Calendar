@@ -4,6 +4,8 @@ import com.toedter.calendar.JCalendar;
 import model.Languages;
 
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
@@ -12,17 +14,19 @@ import java.util.Locale;
 public class SwingCalendar extends JPanel {
 
     private static JCalendar calendar = new JCalendar();
+    private Calendar c;
 
     SwingCalendar(){
-
+        c = Calendar.getInstance();
         calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
-                final Calendar c = (Calendar) evt.getNewValue();
-                System.out.println(c.getTime());
+                c = (Calendar) evt.getNewValue();
                 EventEditorWindow eventEditorWindow = new EventEditorWindow(c);
                 SwingConsole.run(eventEditorWindow, 800, 500);
+
             }
         });
+
         changeVisible(false);
         add(calendar);
     }

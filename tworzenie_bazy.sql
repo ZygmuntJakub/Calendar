@@ -3,14 +3,6 @@ USE calendar;
 
 USE Calendar;
 
-CREATE TABLE Events(
-event_id INTEGER NOT NULL PRIMARY KEY,
-name VARCHAR(100),
-description VARCHAR(100),
-place VARCHAR(100),
-start Datetime,
-end Datetime,
-alarm Datetime,
-importance INTEGER
-);
+DROP TABLE Events;
+CREATE TABLE Events(event_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, title VARCHAR(100), description VARCHAR(250), date Datetime, alertBefore INTEGER, place VARCHAR(30));
 

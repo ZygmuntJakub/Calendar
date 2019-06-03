@@ -61,4 +61,22 @@ public class DatabaseService {
         }
         return resultSet;
     }
+    public void executeUpdate(String sqlQuery){
+        ResultSet resultSet = null;
+        try {
+            stmt.executeUpdate(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void resetDatabase(){
+        String drop = "DROP TABLE Events;";
+        String create = "CREATE TABLE Events(event_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, title VARCHAR(100), description VARCHAR(250), date Datetime, alertBefore INTEGER, place VARCHAR(30));";
+        try {
+            stmt.executeUpdate(drop);
+            stmt.executeUpdate(create);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
