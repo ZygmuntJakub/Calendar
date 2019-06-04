@@ -8,11 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class SaveWindow extends JFrame {
+public class SaveAndLoadWindow extends JFrame {
     public static final DatabaseController databaseController = new DatabaseController();
 
-    SaveWindow(){
-        super("Document #");
+    SaveAndLoadWindow(){
+        super("Zapis i odczyt danych");
         setLocation(30, 30);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

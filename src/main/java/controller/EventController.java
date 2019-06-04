@@ -140,11 +140,21 @@ public class EventController implements RepoController<Event, Calendar> {
 
 	public void modifyEvent(Event oldEvent, Event newEvent) {
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).equals(oldEvent)) {
-				list.set(i, newEvent);	
-			}
-		}
-		
+            if (list.get(i).equals(oldEvent)) {
+                list.set(i, newEvent);
+            }
+        }
 	}
+    public List<String> getDays(Calendar calendar) {
+        List<String> days = new ArrayList<>();
+        Calendar c;
+        for (Event e : list) {
+            c = e.getDate();
+            if (c.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && c.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) {
+                days.add(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
+            }
+        }
+        return days;
+    }
 
 }
