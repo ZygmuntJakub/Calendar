@@ -72,13 +72,13 @@ public class EventController implements RepoController<Event, Calendar> {
     }
 
     public List<String> getAllTitles() {
-        List<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<String>();
         list.forEach(x -> titles.add(x.getTitle()));
         return titles;
     }
 
     public List<String> getDateTitles(Calendar calendar) {
-        List<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<String>();
         Calendar c;
         for (Event e : list) {
             c = e.getDate();
@@ -89,7 +89,7 @@ public class EventController implements RepoController<Event, Calendar> {
         return titles;
     }
     public Event getDateAndTitleEvent(Calendar calendar, String title) {
-        List<Event> events = new ArrayList<>();
+        List<Event> events = new ArrayList<Event>();
         Calendar c;
         Event e;
         for(int i = 0 ; i < list.size() ; i++){
@@ -125,5 +125,26 @@ public class EventController implements RepoController<Event, Calendar> {
     public void changeListData(List<Event> list){
         this.list = list;
     }
+    
+    public List<Event> getEventsByDate(Calendar date) {
+		List<Event> events = new ArrayList<Event>();
+		for (int i = 0; i < list.size(); i++) {
+			Calendar c = list.get(i).getDate();
+			if (c.get(Calendar.YEAR) == date.get(Calendar.YEAR) && c.get(Calendar.MONTH) == date.get(Calendar.MONTH)
+					&& c.get(Calendar.DATE) == date.get(Calendar.DATE)) {
+				events.add(list.get(i));
+			}
+		}
+		return events;
+	}
+
+	public void modifyEvent(Event oldEvent, Event newEvent) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(oldEvent)) {
+				list.set(i, newEvent);	
+			}
+		}
+		
+	}
 
 }

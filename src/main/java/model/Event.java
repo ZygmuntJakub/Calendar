@@ -2,6 +2,7 @@ package model;
 
 import java.time.Duration;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Event {
     private String title;
@@ -67,14 +68,14 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", eventDate=" + eventDate +
-                ", duration=" + duration +
-                ", place='" + place + '\'' +
-                '}';
-    }
+		return "Tytu³: " + title + ", data: "
+				+ eventDate.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("pl", "PL")) + ", "
+				+ eventDate.get(Calendar.DAY_OF_MONTH) + " "
+				+ eventDate.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("pl", "PL")) + " "
+				+ eventDate.get(Calendar.YEAR) + " godz. " + eventDate.get(Calendar.HOUR_OF_DAY) + ":"
+				+ eventDate.get(Calendar.MINUTE) + ", czas trwania: " + duration.toMinutes() + "min., opis: "
+				+ description + ", miejsce: " + place + ".";
+	}
 
     @Override
     public int hashCode() {

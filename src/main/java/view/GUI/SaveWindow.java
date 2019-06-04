@@ -26,14 +26,12 @@ public class SaveWindow extends JFrame {
         JButton readSql = new JButton("Odczytaj z bazy");
 
         saveSql.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 databaseController.saveToDataBase();
             }
         });
 
         readSql.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 databaseController.loadAndOverrideDataFromDatabase();
             }

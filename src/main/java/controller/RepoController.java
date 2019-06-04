@@ -12,4 +12,6 @@ public interface RepoController<T, I> {
     public void modifyByIndex(int index, T t);
     Event getEvent(int i) throws SQLException;
     List<T> getAll();
+    public List<Event> getEventsByDate(Calendar date);
+    public void modifyEvent(Event oldEvent, Event newEvent);
 }
