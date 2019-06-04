@@ -1,7 +1,7 @@
 <application>
   <component name="FindSettings">
-    <option name="customScope" value="Project 'Calendar'" />
-    <option name="defaultScopeName" value="Project 'Calendar'" />
-    <option name="SEARCH_SCOPE" value="Project 'Calendar'" />
+    <option name="customScope" value="Module 'Calendar'" />
+    <option name="defaultScopeName" value="Module 'Calendar'" />
+    <option name="SEARCH_SCOPE" value="Module 'Calendar'" />
   </component>
 </application>
