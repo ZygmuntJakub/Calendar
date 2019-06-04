@@ -33,6 +33,7 @@ public class SwingCalendar extends JPanel {
         add(calendar.getYearChooser());
         add(calendar.getMonthChooser());
         add(jPanel);
+        openEditorWindow();
     }
 
     public static void changeLanguage(Languages language) {
@@ -63,7 +64,7 @@ public class SwingCalendar extends JPanel {
     }
 
     public  void upDateEventsOnCalendar(){
-        Component compo[] = jPanel.getComponents();
+        Component compo[] = getComponents(jPanel);
         for (Component comp : compo) {
             if (!(comp instanceof JButton))
                 continue;
@@ -75,20 +76,27 @@ public class SwingCalendar extends JPanel {
                     changeButtonColor(btn);
                 }
             });
+        }
+    }
+    public void openEditorWindow(){
+        Component compo[] = getComponents(jPanel);
+        for (Component comp : compo) {
+            if (!(comp instanceof JButton))
+                continue;
+            JButton btn = (JButton) comp;
             btn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     c = new GregorianCalendar(calendar.getYearChooser().getYear(), calendar.getMonthChooser().getMonth(), Integer.valueOf(btn.getText()));
                     EventEditorWindow eventEditorWindow = new EventEditorWindow(c);
-                    eventEditorWindow.addWindowListener(new WindowAdapter() {
-                        @Override
-                        public void windowClosed(WindowEvent e) {
-                            changeButtonColor(btn);
-                        }
-                    });
                     SwingConsole.run(eventEditorWindow, 800, 500);
                 }
             });
         }
+    }
+
+    public Component[] getComponents(JPanel jPanel){
+        Component compo[] = jPanel.getComponents();
+        return compo;
     }
 }

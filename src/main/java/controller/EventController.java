@@ -4,17 +4,17 @@ import model.EmptyListException;
 import model.Event;
 import model.NoEventException;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 public class EventController implements RepoController<Event, Calendar> {
-    List<Event> list;
+
+    public static Events list;
 
     public EventController() {
-        list = new ArrayList<Event>();
+        list = new Events();
         mock();
     }
 
@@ -24,7 +24,7 @@ public class EventController implements RepoController<Event, Calendar> {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        this.list.add(event);
+        this.list.getEvents().add(event);
     }
 
     public void replaceEventValues(Event oldEvent, Event newEvent) {
@@ -37,50 +37,50 @@ public class EventController implements RepoController<Event, Calendar> {
 
     public void delete(Event event) {
         try {
-            if (!list.contains(event)) throw new NoEventException();
+            if (!list.getEvents().contains(event)) throw new NoEventException();
         } catch (NoEventException e) {
             e.printStackTrace();
         }
-        this.list.remove(event);
+        this.list.getEvents().remove(event);
     }
 
     public void modifyByIndex(int index, Event event) {
         try {
-            if (index >= list.size()) throw new IndexOutOfBoundsException();
+            if (index >= list.getEvents().size()) throw new IndexOutOfBoundsException();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
-        list.set(index, event);
+        list.getEvents().set(index, event);
     }
 
     public Event getEvent(int index) {
         try {
-            if (index >= list.size()) throw new IndexOutOfBoundsException();
+            if (index >= list.getEvents().size()) throw new IndexOutOfBoundsException();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
-        return list.get(index);
+        return list.getEvents().get(index);
     }
 
     public List<Event> getAll() {
         try {
-            if (list.isEmpty()) throw new EmptyListException();
+            if (list.getEvents().isEmpty()) throw new EmptyListException();
         } catch (EmptyListException e) {
             e.printStackTrace();
         }
-        return list;
+        return list.getEvents();
     }
 
     public List<String> getAllTitles() {
         List<String> titles = new ArrayList<String>();
-        list.forEach(x -> titles.add(x.getTitle()));
+        list.getEvents().forEach(x -> titles.add(x.getTitle()));
         return titles;
     }
 
     public List<String> getDateTitles(Calendar calendar) {
         List<String> titles = new ArrayList<String>();
         Calendar c;
-        for (Event e : list) {
+        for (Event e : list.getEvents()) {
             c = e.getDate();
             if (c.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && c.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) && c.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)) {
 				titles.add(e.getTitle());
@@ -92,8 +92,8 @@ public class EventController implements RepoController<Event, Calendar> {
         List<Event> events = new ArrayList<Event>();
         Calendar c;
         Event e;
-        for(int i = 0 ; i < list.size() ; i++){
-            e = list.get(i);
+        for(int i = 0 ; i < list.getEvents().size() ; i++){
+            e = list.getEvents().get(i);
             c = e.getDate();
             if (c.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && c.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) && c.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH) && e.getTitle().equals(title)) {
                 return e;
@@ -105,50 +105,50 @@ public class EventController implements RepoController<Event, Calendar> {
     public void deleteEventByDateAndTitle(Calendar calendar, String title){
         Calendar c;
         Event e;
-        for(int i = 0 ; i < list.size() ; i++){
-            e = list.get(i);
+        for(int i = 0 ; i < list.getEvents().size() ; i++){
+            e = list.getEvents().get(i);
             c = e.getDate();
             if (c.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && c.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) && c.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH) && e.getTitle().equals(title)) {
-                list.remove(e);
+                list.getEvents().remove(e);
             }
         }
     }
 
     private void mock() {
-        Event one = new Event("Spotkanie", "Bardzo ważne", Calendar.getInstance(), Duration.ofMinutes(12), "LODEX");
-        Event two = new Event("Wizyta", "Dentysta", new GregorianCalendar(2019, 5, 3, 1, 12,10), Duration.ofMinutes(230), "KAKA");
-        Event three = new Event("Wizyta", "Dentysta", new GregorianCalendar(2019, 5, 4, 1, 12,10), Duration.ofMinutes(230), "KAKA");
-        list.add(one);
-        list.add(two);
-        list.add(three);
+        Event one = new Event("Spotkanie", "Bardzo ważne", Calendar.getInstance(), 12, "LODEX");
+        Event two = new Event("Wizyta", "Dentysta", new GregorianCalendar(2019, 5, 3, 1, 12,10), 230, "KAKA");
+        Event three = new Event("Wizyta", "Dentysta", new GregorianCalendar(2019, 5, 4, 1, 12,10), 200, "KAKA");
+        list.getEvents().add(one);
+        list.getEvents().add(two);
+        list.getEvents().add(three);
     }
     public void changeListData(List<Event> list){
-        this.list = list;
+        this.list.setEvents(new ArrayList<>(list));
     }
     
     public List<Event> getEventsByDate(Calendar date) {
 		List<Event> events = new ArrayList<Event>();
-		for (int i = 0; i < list.size(); i++) {
-			Calendar c = list.get(i).getDate();
+		for (int i = 0; i < list.getEvents().size(); i++) {
+			Calendar c = list.getEvents().get(i).getDate();
 			if (c.get(Calendar.YEAR) == date.get(Calendar.YEAR) && c.get(Calendar.MONTH) == date.get(Calendar.MONTH)
 					&& c.get(Calendar.DATE) == date.get(Calendar.DATE)) {
-				events.add(list.get(i));
+				events.add(list.getEvents().get(i));
 			}
 		}
 		return events;
 	}
 
 	public void modifyEvent(Event oldEvent, Event newEvent) {
-		for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals(oldEvent)) {
-                list.set(i, newEvent);
+		for (int i = 0; i < list.getEvents().size(); i++) {
+            if (list.getEvents().get(i).equals(oldEvent)) {
+                list.getEvents().set(i, newEvent);
             }
         }
 	}
     public List<String> getDays(Calendar calendar) {
         List<String> days = new ArrayList<>();
         Calendar c;
-        for (Event e : list) {
+        for (Event e : list.getEvents()) {
             c = e.getDate();
             if (c.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && c.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) {
                 days.add(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
@@ -157,4 +157,7 @@ public class EventController implements RepoController<Event, Calendar> {
         return days;
     }
 
+    public void replaceEvents(Events events) {
+        list.setEvents(events.getEvents());
+    }
 }

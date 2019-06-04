@@ -1,28 +1,52 @@
 package model;
 
-import java.time.Duration;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class Event {
-    /**
-     * Klasa reprezentuj?ca wydarzenie w kalendarzu
-     */
-    private String title;
-    private String description;
-    private Calendar eventDate;
-    private Duration duration;
-    private String place;
+/**
+ * Klasa reprezentująca wydarzenie w kalendarzu
+ */
+@XmlRootElement(name = "event")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Event implements Serializable {
 
     /**
-     *
-     * @param title Tytu? wydarzenia
+     * Tytuł wydarzenia
+     */
+    private String title;
+    /**
+     * Opis wydarzenia
+     */
+    private String description;
+    /**
+     * Data i godzina rozpoczęcia wydarzenia
+     */
+    private Calendar eventDate;
+    /**
+     * Reprezentuje ile minut przed wydarzenie powinien pojawił się alert
+     */
+    private Integer duration;
+    /**
+     * Miejsce wydarzenia
+     */
+    private String place;
+
+    public Event() {
+    }
+
+    /**
+     * Konstruktor klasy inicjalizujący wszystkie dostępne pola
+     * @param title Tytuł wydarzenia
      * @param description Opis wydarzenia
-     * @param date Data rozpocz?cia wydarzenia
-     * @param duration Reprezentuje ile minut przed wydarzenie powinien pojawi? sie alert
+     * @param date Data i godzina rozpoczęcia wydarzenia
+     * @param duration Reprezentuje ile minut przed wydarzenie powinien pojawił się alert
      * @param place Miejsce wydarzenia
      */
-    public Event(String title, String description, Calendar date, Duration duration, String place) {
+    public Event(String title, String description, Calendar date, Integer duration, String place) {
         this.setTitle(title);
         this.setDescription(description);
         this.eventDate = date;
@@ -30,10 +54,18 @@ public class Event {
         this.duration = duration;
     }
 
+    /**
+     * Getter - pobiera nazwę wydarzenia
+     * @return Nazwa wydarzenia
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Setter - ustawia nazwę wydarzenia
+     * @param title Tytuł wydarzenia
+     */
     public void setTitle(String title) {
         try {
             if (title == null) throw new NullPointerException();
@@ -43,10 +75,18 @@ public class Event {
         this.title = title;
     }
 
+    /**
+     * Getter - pobiera opis wydarzenia
+     * @return Opis wydarzenia
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Setter - ustawia opis wydarzenia
+     * @param description Opis wydarzenia
+     */
     public void setDescription(String description) {
         try {
             if (description == null) throw new NullPointerException();
@@ -56,10 +96,18 @@ public class Event {
         this.description = description;
     }
 
+    /**
+     * Getter - pobiera datę i godzinę wydarzenia
+     * @return Data i godzina rozpoczęcia wydarzenia
+     */
     public Calendar getDate() {
         return eventDate;
     }
 
+    /**
+     * Setter - ustawia datę i godzinę rozpoczęcia wydarzenia
+     * @param date Data i godzina wydarzenia
+     */
     public void setDate(Calendar date) {
         try {
             if (date == null) throw new NullPointerException();
@@ -69,22 +117,49 @@ public class Event {
         this.eventDate = date;
     }
 
+    /**
+     * Getter - pobiera miejsce wydarzenia
+     * @return Miejsce wydarzenia
+     */
     public String getPlace() {
         return place;
     }
 
+    /**
+     * Setter - ustawia miejsce wydarzenia
+     * @param place miejsce wydarzenia
+     */
     public void setPlace(String place) {
         this.place = place;
     }
+    /**
+     * Getter - pobiera ile minut przed wydarzeniem wyświetlić alert
+     * @return  Ile minut przed wydarzenie powinien pojawił się alert
+     */
+    public Integer getDuration() {
+        return duration;
+    }
 
+    /**
+     * Setter - ustawia ile minut przed wydarzenie powinien pojawił się alert
+     * @param duration ile minut przed wydarzenie powinien pojawił się alert
+     */
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    /**
+     * Odpowiada za sformatowanie informacji o klasie
+     * @return Informacje o polach klasy
+     */
     @Override
     public String toString() {
-		return "Tytu?: " + title + ", data: "
+		return "Tytuł: " + title + ", data: "
 				+ eventDate.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("pl", "PL")) + ", "
 				+ eventDate.get(Calendar.DAY_OF_MONTH) + " "
 				+ eventDate.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("pl", "PL")) + " "
 				+ eventDate.get(Calendar.YEAR) + " godz. " + eventDate.get(Calendar.HOUR_OF_DAY) + ":"
-				+ eventDate.get(Calendar.MINUTE) + ", czas trwania: " + duration.toMinutes() + "min., opis: "
+				+ eventDate.get(Calendar.MINUTE) + ", czas trwania: " + duration + "min., opis: "
 				+ description + ", miejsce: " + place + ".";
 	}
 
@@ -125,12 +200,6 @@ public class Event {
         return true;
     }
 
-    public Duration getDuration() {
-        return duration;
-    }
 
-    public void setDuration(Duration duration) {
-        this.duration = duration;
-    }
 
 }

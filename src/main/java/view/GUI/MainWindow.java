@@ -17,7 +17,8 @@ public class MainWindow extends JFrame {
 	Label color = new Label("Kolor: ");
 	Button language_PL = new Button("Polski");
 	Button language_EN = new Button("English");
-	SwingCalendar calendar = new SwingCalendar();
+
+	public static SwingCalendar calendar = new SwingCalendar();
 
 	ButtonGroup colorGroup = new ButtonGroup();
 
@@ -120,8 +121,6 @@ public class MainWindow extends JFrame {
 		add(color);
 		add(comboBox);
 
-		addMouseListener(new MouseHandler());
-
 	}
 
 	private void changeBackground(Color color) {
@@ -138,13 +137,6 @@ public class MainWindow extends JFrame {
 				changeBackground(Color.GRAY);
 			if (choose.equals("White"))
 				changeBackground(Color.WHITE);
-		}
-	}
-
-	class MouseHandler extends MouseAdapter // klasa adaptacyjna
-	{
-		public void mouseClicked(MouseEvent e) {
-			System.out.println("Mysz klikni�ta w punkcie " + e.getX() + ", " + e.getY());
 		}
 	}
 

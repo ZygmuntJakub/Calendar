@@ -27,7 +27,7 @@ public class TUI {
 		boolean isTrue = true;
 		while (isTrue) {
 			System.out.println(
-					"1. Dodaj wydarzenie.\n2. Wyœwietl wydarzenia w dniu X.\n3. Wyœwietl wszystkie wydarzenia.\n5. Zakoñcz.");
+					"1. Dodaj wydarzenie.\n2. WyÅ›wietl wydarzenia w dniu X.\n3. WyÅ›wietl wszystkie wydarzenia.\n5. ZakoÅ„cz.");
 			int key = scanner.nextInt();
 			scanner.nextLine();
 			switch (key) {
@@ -38,7 +38,7 @@ public class TUI {
 			case 2:
 				showEvents(dateInput(false));
 				System.out.println(
-						"Czy chcesz zmodyfikowaæ któreœ wydarzenie? Jeœli tak to podaj jego numer. Jeœli nie to wpisz 0.");
+						"Czy chcesz zmodyfikowaÄ‡ ktÃ³reÅ› wydarzenie? JeÅ›li tak to podaj jego numer. JeÅ›li nie to wpisz 0.");
 				int choice = scanner.nextInt();
 				scanner.nextLine();
 				if (choice == 0)
@@ -65,16 +65,16 @@ public class TUI {
 	private static void modify(Event oldEvent) {
 		Calendar cal = new GregorianCalendar();
 		String title, description, place;
-		long minutesOfDuration;
+		Integer minutesOfDuration;
 
-		System.out.println("Podaj nowy tytu³ wydarzenia:");
+		System.out.println("Podaj nowy tytuÅ‚ wydarzenia:");
 		title = stringInput();
 
-		System.out.println("Podaj now¹ datê wydarzenia:");
+		System.out.println("Podaj nowÄ… datÄ™ wydarzenia:");
 		cal = dateInput(true);
 
 		System.out.println("Podaj nowy czas trwania wydarzenia:");
-		minutesOfDuration = longInput();
+		minutesOfDuration = intInput();
 		scanner.nextLine();
 
 		System.out.println("Podaj nowy opis wydarzenia:");
@@ -82,7 +82,7 @@ public class TUI {
 
 		System.out.println("Podaj nowe miejsce wydarzenia:");
 		place = stringInput();
-		repo.modifyEvent(oldEvent, new Event(title, description, cal, Duration.ofMinutes(minutesOfDuration), place));
+		repo.modifyEvent(oldEvent, new Event(title, description, cal, minutesOfDuration, place));
 	}
 
 	private static void showEvents(Calendar date) {
@@ -97,9 +97,9 @@ public class TUI {
 		int year, month, day, hourOfDay, minute;
 		System.out.println("Rok:");
 		year = scanner.nextInt();
-		System.out.println("Miesi¹c:");
+		System.out.println("Miesiï¿½c:");
 		month = scanner.nextInt() - 1;
-		System.out.println("Dzieñ:");
+		System.out.println("Dzieï¿½:");
 		day = scanner.nextInt();
 		if (time) {
 			System.out.println("Godzina:");
@@ -117,23 +117,23 @@ public class TUI {
 		return scanner.nextLine();
 	}
 
-	private static long longInput() {
-		return scanner.nextLong();
+	private static Integer intInput() {
+		return scanner.nextInt();
 	}
 
 	private static void addEvent() throws SQLException {
 		String title, description, place;
-		long minutesOfDuration;
+		Integer minutesOfDuration;
 		Calendar date = new GregorianCalendar();
 
-		System.out.println("Podaj tytu³ wydarzenia:");
+		System.out.println("Podaj tytuÅ‚ wydarzenia:");
 		title = stringInput();
 
-		System.out.println("Podaj datê wydarzenia:");
+		System.out.println("Podaj datÄ™ wydarzenia:");
 		date = dateInput(true);
 
 		System.out.println("Podaj czas trwania wydarzenia:");
-		minutesOfDuration = longInput();
+		minutesOfDuration = intInput();
 		scanner.nextLine();
 
 		System.out.println("Podaj opis wydarzenia:");
@@ -142,6 +142,6 @@ public class TUI {
 		System.out.println("Podaj miejsce wydarzenia:");
 		place = stringInput();
 
-		repo.add(new Event(title, description, date, Duration.ofMinutes(minutesOfDuration), place));
+		repo.add(new Event(title, description, date, minutesOfDuration, place));
 	}
 }

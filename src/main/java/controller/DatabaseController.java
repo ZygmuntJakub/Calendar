@@ -6,7 +6,6 @@ import view.GUI.EventEditorWindow;
 
 import java.sql.*;
 import java.time.Duration;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -29,7 +28,7 @@ public class DatabaseController{
                     "INSERT INTO Events(title, description, date, alertBefore, place) VALUES ('" +
                             e.getTitle() + "', '" + e.getDescription() + "', '" +
                             new Timestamp(e.getDate().getTimeInMillis()) + "', '" +
-                            e.getDuration().toMinutes() + "', '" +
+                            e.getDuration() + "', '" +
                             e.getPlace()+ "');";
             databaseService.executeUpdate(query);
         }
@@ -52,7 +51,7 @@ public class DatabaseController{
                 Timestamp timestamp = Timestamp.valueOf(rs.getString(4));
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(timestamp.getTime());
-                Event E = new Event(rs.getString(2), rs.getString(3), calendar, Duration.ofMinutes(Long.valueOf(rs.getString(5))), rs.getString(6));
+                Event E = new Event(rs.getString(2), rs.getString(3), calendar,Integer.valueOf(rs.getString(5)), rs.getString(6));
                 base.add(E);
             }
 

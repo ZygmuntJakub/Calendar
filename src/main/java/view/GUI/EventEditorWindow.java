@@ -1,6 +1,7 @@
 package view.GUI;
 
 import com.github.lgooddatepicker.components.TimePicker;
+import com.sun.tools.javac.Main;
 import controller.EventController;
 import model.Event;
 
@@ -77,6 +78,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
                 repoController.deleteEventByDateAndTitle(calendar, list.getSelectedValue().toString());
                 resetView();
                 list.setListData(repoController.getDateTitles(calendar).toArray());
+                MainWindow.calendar.upDateEventsOnCalendar();
             }
         });
 
@@ -149,7 +151,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         int minutes = readedEvent.getDate().get(Calendar.MINUTE);
         this.timePicker.setTime(LocalTime.of(hour, minutes));
         this.place.setText(readedEvent.getPlace());
-        int duration = (int) readedEvent.getDuration().toMinutes();
+        int duration = readedEvent.getDuration();
         this.minutesSlider.setValue(duration);
 
     }
@@ -165,7 +167,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
 
         Calendar eventDate = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute);
 
-        Duration eventDuration = Duration.ofMinutes(minutesSlider.getValue());
+        Integer eventDuration = minutesSlider.getValue();
 
         String eventPlace = place.getText();
 
@@ -186,6 +188,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
     public void actionPerformed(ActionEvent e) {
         repoController.add(getEventFromPanel());
         list.setListData(repoController.getDateTitles(calendar).toArray());
+        MainWindow.calendar.upDateEventsOnCalendar();
 
     }
 
