@@ -43,7 +43,7 @@ public class Menu extends JMenuBar {
     }
 
     private void setUpSave(){
-        save = new JMenuItem("Zapisz",
+        save = new JMenuItem("Zapisz/Odczytaj",
                 KeyEvent.VK_1);
         save.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_1, ActionEvent.ALT_MASK));
@@ -51,9 +51,9 @@ public class Menu extends JMenuBar {
                 "Zapisz stan aplikacji");
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SaveWindow saveWindow = new SaveWindow();
-                saveWindow.setVisible(true);
-                SwingConsole.run(saveWindow, 300, 300);
+                SaveAndLoadWindow saveAndLoadWindow = new SaveAndLoadWindow();
+                saveAndLoadWindow.setVisible(true);
+                SwingConsole.run(saveAndLoadWindow, 300, 300);
             }
         });
     }
