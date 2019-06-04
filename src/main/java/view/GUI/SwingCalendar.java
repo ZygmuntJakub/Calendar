@@ -28,33 +28,7 @@ public class SwingCalendar extends JPanel {
 
         jPanel = calendar.getDayChooser().getDayPanel();
 
-        Component compo[] = jPanel.getComponents();
-        for (Component comp : compo) {
-            if (!(comp instanceof JButton))
-                continue;
-            JButton btn = (JButton) comp;
-            changeButtonColor(btn);
-            calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
-                public void propertyChange(PropertyChangeEvent evt) {
-                    c = (Calendar) evt.getNewValue();
-                    changeButtonColor(btn);
-                }
-            });
-            btn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    c = new GregorianCalendar(calendar.getYearChooser().getYear(), calendar.getMonthChooser().getMonth(), Integer.valueOf(btn.getText()));
-                    EventEditorWindow eventEditorWindow = new EventEditorWindow(c);
-                    eventEditorWindow.addWindowListener(new WindowAdapter() {
-                        @Override
-                        public void windowClosed(WindowEvent e) {
-                            changeButtonColor(btn);
-                        }
-                    });
-                    SwingConsole.run(eventEditorWindow, 800, 500);
-                }
-            });
-        }
+        upDateEventsOnCalendar();
 
         add(calendar.getYearChooser());
         add(calendar.getMonthChooser());
@@ -83,7 +57,38 @@ public class SwingCalendar extends JPanel {
             btn.setBackground(Color.RED);
             btn.setOpaque(true);
         }else{
-            btn.setOpaque(false);
+            btn.setBackground(Color.WHITE);
+            btn.setOpaque(true);
+        }
+    }
+
+    public  void upDateEventsOnCalendar(){
+        Component compo[] = jPanel.getComponents();
+        for (Component comp : compo) {
+            if (!(comp instanceof JButton))
+                continue;
+            JButton btn = (JButton) comp;
+            changeButtonColor(btn);
+            calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent evt) {
+                    c = (Calendar) evt.getNewValue();
+                    changeButtonColor(btn);
+                }
+            });
+            btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    c = new GregorianCalendar(calendar.getYearChooser().getYear(), calendar.getMonthChooser().getMonth(), Integer.valueOf(btn.getText()));
+                    EventEditorWindow eventEditorWindow = new EventEditorWindow(c);
+                    eventEditorWindow.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            changeButtonColor(btn);
+                        }
+                    });
+                    SwingConsole.run(eventEditorWindow, 800, 500);
+                }
+            });
         }
     }
 }

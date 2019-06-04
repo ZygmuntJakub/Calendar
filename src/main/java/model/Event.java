@@ -5,12 +5,23 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class Event {
+    /**
+     * Klasa reprezentuj?ca wydarzenie w kalendarzu
+     */
     private String title;
     private String description;
     private Calendar eventDate;
     private Duration duration;
     private String place;
 
+    /**
+     *
+     * @param title Tytu? wydarzenia
+     * @param description Opis wydarzenia
+     * @param date Data rozpocz?cia wydarzenia
+     * @param duration Reprezentuje ile minut przed wydarzenie powinien pojawi? sie alert
+     * @param place Miejsce wydarzenia
+     */
     public Event(String title, String description, Calendar date, Duration duration, String place) {
         this.setTitle(title);
         this.setDescription(description);
@@ -68,7 +79,7 @@ public class Event {
 
     @Override
     public String toString() {
-		return "Tytu³: " + title + ", data: "
+		return "Tytu?: " + title + ", data: "
 				+ eventDate.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("pl", "PL")) + ", "
 				+ eventDate.get(Calendar.DAY_OF_MONTH) + " "
 				+ eventDate.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("pl", "PL")) + " "
