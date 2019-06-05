@@ -15,6 +15,6 @@ public class CalendarApplication {
         MainWindow mainWindow = new MainWindow();
         Menu menu = new Menu();
         mainWindow.setJMenuBar(menu);
-        SwingConsole.run(mainWindow, 800, 600);
+        SwingConsole.run(mainWindow, 1100, 350);
     }
 }

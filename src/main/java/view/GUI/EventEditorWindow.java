@@ -22,6 +22,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
 
 
     public static final EventController repoController = new EventController();
+    public static final int MINUTES = 300;
 
     private JButton save;
     private JButton newEvent;
@@ -87,7 +88,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         place = new JTextField("", 15);
         timePicker = new TimePicker();
 
-        minutesSlider = new JSlider(JSlider.HORIZONTAL, 0, 300, 30);
+        minutesSlider = new JSlider(JSlider.HORIZONTAL, 0, EventEditorWindow.MINUTES, 30);
         minutesSlider.setMajorTickSpacing(50);
         minutesSlider.setMinorTickSpacing(20);
         minutesSlider.setPaintTicks(true);

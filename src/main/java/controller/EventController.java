@@ -3,11 +3,10 @@ package controller;
 import model.EmptyListException;
 import model.Event;
 import model.NoEventException;
+import view.GUI.EventEditorWindow;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class EventController implements RepoController<Event, Calendar> {
 
@@ -157,7 +156,29 @@ public class EventController implements RepoController<Event, Calendar> {
         return days;
     }
 
+    public Event getAlertedEvents(){
+        Events eventsToSort = new Events();
+        eventsToSort.setEvents((ArrayList<Event>) list.getEvents().clone());
+        Collections.sort(eventsToSort.getEvents());
+        long minutes;
+        int compare;
+        for (Event e: eventsToSort.getEvents()) {
+            minutes = getDateDiff(Calendar.getInstance().getTime(), e.getDate().getTime(), TimeUnit.MINUTES);
+            compare = e.getDate().compareTo(Calendar.getInstance());
+            if(minutes >= 0 && compare != -1 && e.getDuration() <= EventEditorWindow.MINUTES){
+                e.setDuration((int)minutes);
+                return e;
+            }
+        }
+        return null;
+    }
+
+
     public void replaceEvents(Events events) {
         list.setEvents(events.getEvents());
+    }
+    private long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
     }
 }

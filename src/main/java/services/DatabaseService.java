@@ -1,5 +1,7 @@
 package services;
 
+import com.mysql.cj.jdbc.ServerPreparedStatement;
+
 import java.sql.*;
 
 public class DatabaseService {
@@ -53,18 +55,21 @@ public class DatabaseService {
     }
 
     public ResultSet executeQuery(String sqlQuery){
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            resultSet = stmt.executeQuery(sqlQuery);
+            preparedStatement = con.prepareStatement(sqlQuery);
+            resultSet = preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return resultSet;
     }
     public void executeUpdate(String sqlQuery){
-        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
         try {
-            stmt.executeUpdate(sqlQuery);
+            preparedStatement = con.prepareStatement(sqlQuery);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

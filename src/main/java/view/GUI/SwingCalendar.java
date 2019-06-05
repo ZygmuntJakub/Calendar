@@ -1,18 +1,14 @@
 package view.GUI;
 
 import com.toedter.calendar.JCalendar;
-import model.Event;
-import model.Languages;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class SwingCalendar extends JPanel {
 
@@ -36,21 +32,11 @@ public class SwingCalendar extends JPanel {
         openEditorWindow();
     }
 
-    public static void changeLanguage(Languages language) {
-        if (language.equals(Languages.Polski)) {
-            calendar.setLocale(new Locale("pl", "PL"));
-        } else if (language.equals(Languages.English)) {
-            calendar.setLocale(new Locale("en", "EN"));
-        }
-
-        calendar.updateUI();
-    }
-
-    public static void changeVisible(boolean visible) {
+    public void changeVisible(boolean visible) {
         if (visible) {
-            calendar.setVisible(true);
+            this.setVisible(true);
         } else {
-            calendar.setVisible(false);
+            this.setVisible(false);
         }
     }
     private void changeButtonColor(JButton btn){

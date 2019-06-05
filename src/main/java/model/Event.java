@@ -12,7 +12,7 @@ import java.util.Locale;
  */
 @XmlRootElement(name = "event")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Event implements Serializable {
+public class Event implements Serializable, Comparable<Event> {
 
     /**
      * Tytuł wydarzenia
@@ -201,5 +201,8 @@ public class Event implements Serializable {
     }
 
 
-
+    @Override
+    public int compareTo(Event o) {
+        return this.getDate().compareTo(o.getDate());
+    }
 }
