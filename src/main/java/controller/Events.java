@@ -7,10 +7,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.List;
 
 @XmlRootElement(name = "events")
 @XmlAccessorType(XmlAccessType.FIELD)
+
+/**
+ * Klasa stanowiąca kontener na wydarzenia używana przy zapisie do formatu XML.
+ */
 public class Events
 {
     @XmlElement(name = "event")
@@ -20,10 +23,18 @@ public class Events
         this.events = new ArrayList<>();
     }
 
+    /**
+     * Zwraca listę wydarzeń.
+     * @return Lista wydarzeń.
+     */
     public ArrayList<Event> getEvents() {
         return this.events;
     }
-
+    
+    /**
+     * Ustawia nową listę wydarzeń.
+     * @param event Nowa lista wydarzeń.
+     */
     public void setEvents(ArrayList<Event> event) {
         this.events = event;
     }

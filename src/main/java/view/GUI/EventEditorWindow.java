@@ -1,7 +1,6 @@
 package view.GUI;
 
 import com.github.lgooddatepicker.components.TimePicker;
-import com.sun.tools.javac.Main;
 import controller.EventController;
 import model.Event;
 

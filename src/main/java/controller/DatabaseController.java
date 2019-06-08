@@ -5,11 +5,13 @@ import services.DatabaseService;
 import view.GUI.EventEditorWindow;
 
 import java.sql.*;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Klasa używana przy zapisie do bazy danych.
+ */
 public class DatabaseController{
     private DatabaseService databaseService;
 
@@ -17,24 +19,13 @@ public class DatabaseController{
         databaseService = new DatabaseService();
     }
 
-    public void saveToDataBase(){
-        databaseService.connect();
-
-        List<Event> events = EventEditorWindow.repoController.getAll();
-        String query;
-        databaseService.resetDatabase();
-        for (Event e : events) {
-            query =
-                    "INSERT INTO Events(title, description, date, alertBefore, place) VALUES ('" +
-                            e.getTitle() + "', '" + e.getDescription() + "', '" +
-                            new Timestamp(e.getDate().getTimeInMillis()) + "', '" +
-                            e.getDuration() + "', '" +
-                            e.getPlace()+ "');";
-            databaseService.executeUpdate(query);
-        }
-
-        databaseService.disconnect();
+    /**
+     * TODO
+     */
+    public void loadAndOverrideDataFromDatabase(){
+        EventEditorWindow.repoController.changeListData(getAllEvents());
     }
+    
     private List<Event> getAllEvents() throws Error
     {
         databaseService.connect();
@@ -65,7 +56,27 @@ public class DatabaseController{
 
         return base;
     }
-    public void loadAndOverrideDataFromDatabase(){
-        EventEditorWindow.repoController.changeListData(getAllEvents());
+    
+    /**
+     * Zapisuje listę wydarzeń do bazy danych.
+     */
+    public void saveToDataBase(){
+        databaseService.connect();
+
+        List<Event> events = EventEditorWindow.repoController.getAll();
+        String query;
+        databaseService.resetDatabase();
+        for (Event e : events) {
+            query =
+                    "INSERT INTO Events(title, description, date, alertBefore, place) VALUES ('" +
+                            e.getTitle() + "', '" + e.getDescription() + "', '" +
+                            new Timestamp(e.getDate().getTimeInMillis()) + "', '" +
+                            e.getDuration() + "', '" +
+                            e.getPlace()+ "');";
+            databaseService.executeUpdate(query);
+        }
+
+        databaseService.disconnect();
     }
+    
 }

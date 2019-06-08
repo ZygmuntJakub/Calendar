@@ -9,13 +9,82 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 import java.sql.SQLException;
-import java.time.Duration;
 
+/**
+ * Klasa do obsługi kalendarza poprzez terminal znakowy.
+ */
 public class TUI {
-	static RepoController<Event, Calendar> repo = new EventController();
-	static List<Event> events = new ArrayList<Event>();
-	static Scanner scanner = new Scanner(System.in);
+	private static RepoController<Event> repo = new EventController();
+	private static List<Event> events = new ArrayList<Event>();
+	private static Scanner scanner = new Scanner(System.in);
+	
+	/**
+	 * Dodaje wydarzenie do listy wydarzeń.
+	 * @throws SQLException
+	 */
+	private static void addEvent() throws SQLException {
+		String title, description, place;
+		Integer minutesOfDuration;
+		Calendar date = new GregorianCalendar();
 
+		System.out.println("Podaj tytuł wydarzenia:");
+		title = stringInput();
+
+		System.out.println("Podaj datę wydarzenia:");
+		date = dateInput(true);
+
+		System.out.println("Podaj czas trwania wydarzenia:");
+		minutesOfDuration = intInput();
+
+		System.out.println("Podaj opis wydarzenia:");
+		description = stringInput();
+
+		System.out.println("Podaj miejsce wydarzenia:");
+		place = stringInput();
+
+		repo.add(new Event(title, description, date, minutesOfDuration, place));
+	}
+
+	/**
+	 * Służy do wprowadzania daty i czasu (opcjonalny).
+	 * @param time Jeśli false to wczytuje tylko datę, jeśli true to także godzinę.
+	 * @return Wczytana data.
+	 */
+	private static Calendar dateInput(boolean time) {
+		Calendar date = new GregorianCalendar();
+		int year, month, day, hourOfDay, minute;
+		System.out.println("Rok:");
+		year = intInput();
+		System.out.println("Miesi�c:");
+		month = intInput() - 1;
+		System.out.println("Dzie�:");
+		day = intInput();
+		if (time) {
+			System.out.println("Godzina:");
+			hourOfDay = intInput();
+			System.out.println("Minuta:");
+			minute = intInput();
+			date.set(year, month, day, hourOfDay, minute, 0);
+		} else
+			date.set(year, month, day);
+		return date;
+	}
+	
+	/**
+	 * Wczytuje dane typu int.
+	 * @return Wczytane dane.
+	 */
+	private static Integer intInput() {
+		int data = scanner.nextInt();
+		scanner.nextLine();
+		return data;
+	}
+
+	/**
+	 * Główna metoda klasy.
+	 * @param args argumenty wywołania.
+	 * @throws SQLException SQLException.
+	 */
 	public static void main(String[] args) throws SQLException {
 		System.out.println("Witaj w kalendarzu!");
 		menu();
@@ -23,13 +92,16 @@ public class TUI {
 		scanner.close();
 	}
 
+	/**
+	 * Wyświetla menu programu.
+	 * @throws SQLException SQLException.
+	 */
 	private static void menu() throws SQLException {
 		boolean isTrue = true;
 		while (isTrue) {
 			System.out.println(
 					"1. Dodaj wydarzenie.\n2. Wyświetl wydarzenia w dniu X.\n3. Wyświetl wszystkie wydarzenia.\n5. Zakończ.");
-			int key = scanner.nextInt();
-			scanner.nextLine();
+			int key = intInput();
 			switch (key) {
 			case 1:
 				addEvent();
@@ -39,8 +111,7 @@ public class TUI {
 				showEvents(dateInput(false));
 				System.out.println(
 						"Czy chcesz zmodyfikować któreś wydarzenie? Jeśli tak to podaj jego numer. Jeśli nie to wpisz 0.");
-				int choice = scanner.nextInt();
-				scanner.nextLine();
+				int choice = intInput();
 				if (choice == 0)
 					break;
 				else
@@ -62,6 +133,10 @@ public class TUI {
 
 	}
 
+	/**
+	 * Modyfikuje wybrane wydarzenie jeśli istnieje na liście.
+	 * @param oldEvent Wydarzenie do zmodyfikowania.
+	 */
 	private static void modify(Event oldEvent) {
 		Calendar cal = new GregorianCalendar();
 		String title, description, place;
@@ -75,16 +150,19 @@ public class TUI {
 
 		System.out.println("Podaj nowy czas trwania wydarzenia:");
 		minutesOfDuration = intInput();
-		scanner.nextLine();
 
 		System.out.println("Podaj nowy opis wydarzenia:");
 		description = stringInput();
 
 		System.out.println("Podaj nowe miejsce wydarzenia:");
 		place = stringInput();
-		repo.modifyEvent(oldEvent, new Event(title, description, cal, minutesOfDuration, place));
+		repo.replaceEventValues(oldEvent, new Event(title, description, cal, minutesOfDuration, place));
 	}
 
+	/**
+	 * Wyświetla wydarzenia wybranego dnia.
+	 * @param date Data dnia.
+	 */
 	private static void showEvents(Calendar date) {
 		events = repo.getEventsByDate(date);
 		for (int i = 0; i < events.size(); i++) {
@@ -92,56 +170,12 @@ public class TUI {
 		}
 	}
 
-	private static Calendar dateInput(boolean time) {
-		Calendar date = new GregorianCalendar();
-		int year, month, day, hourOfDay, minute;
-		System.out.println("Rok:");
-		year = scanner.nextInt();
-		System.out.println("Miesi�c:");
-		month = scanner.nextInt() - 1;
-		System.out.println("Dzie�:");
-		day = scanner.nextInt();
-		if (time) {
-			System.out.println("Godzina:");
-			hourOfDay = scanner.nextInt();
-			System.out.println("Minuta:");
-			minute = scanner.nextInt();
-			date.set(year, month, day, hourOfDay, minute, 0);
-		} else
-			date.set(year, month, day);
-		scanner.nextLine();
-		return date;
-	}
-
+	/**
+	 * Wczytuje dane typu String.
+	 * @return Wczytane dane.
+	 */
 	private static String stringInput() {
 		return scanner.nextLine();
 	}
 
-	private static Integer intInput() {
-		return scanner.nextInt();
-	}
-
-	private static void addEvent() throws SQLException {
-		String title, description, place;
-		Integer minutesOfDuration;
-		Calendar date = new GregorianCalendar();
-
-		System.out.println("Podaj tytuł wydarzenia:");
-		title = stringInput();
-
-		System.out.println("Podaj datę wydarzenia:");
-		date = dateInput(true);
-
-		System.out.println("Podaj czas trwania wydarzenia:");
-		minutesOfDuration = intInput();
-		scanner.nextLine();
-
-		System.out.println("Podaj opis wydarzenia:");
-		description = stringInput();
-
-		System.out.println("Podaj miejsce wydarzenia:");
-		place = stringInput();
-
-		repo.add(new Event(title, description, date, minutesOfDuration, place));
-	}
 }
