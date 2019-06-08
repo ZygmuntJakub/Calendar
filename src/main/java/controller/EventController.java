@@ -14,10 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class EventController implements RepoController<Event> {
 
-    public static Events list;
-
     public EventController() {
-        list = new Events();
         mock();
     }
     
@@ -235,4 +232,15 @@ public class EventController implements RepoController<Event> {
         oldEvent.setDuration(newEvent.getDuration());
         oldEvent.setPlace(newEvent.getPlace());
     }
+
+	@Override
+	public String toString() {
+		String string = new String();
+		for (int i = 0; i < list.size(); i++) {
+			string += (i + 1) + ". " + this.getEvent(i).toString();
+		}
+		return string;
+	}
+    
+
 }

@@ -160,7 +160,7 @@ public class Event implements Serializable, Comparable<Event> {
 				+ eventDate.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("pl", "PL")) + " "
 				+ eventDate.get(Calendar.YEAR) + " godz. " + eventDate.get(Calendar.HOUR_OF_DAY) + ":"
 				+ eventDate.get(Calendar.MINUTE) + ", czas trwania: " + duration + "min., opis: "
-				+ description + ", miejsce: " + place + ".";
+				+ description + ", miejsce: " + place + ".\n";
 	}
 
     @Override

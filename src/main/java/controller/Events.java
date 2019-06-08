@@ -23,6 +23,10 @@ public class Events
         this.events = new ArrayList<>();
     }
 
+    public ArrayList<Event> getEvent() {
+        return this.events;
+    }
+    
     /**
      * Zwraca listę wydarzeń.
      * @return Lista wydarzeń.
@@ -37,5 +41,9 @@ public class Events
      */
     public void setEvents(ArrayList<Event> event) {
         this.events = event;
+    }
+    
+    public int size() {
+    	return events.size();
     }
 }
