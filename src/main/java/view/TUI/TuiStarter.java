@@ -1,25 +1,38 @@
 package view.TUI;
 
-import controller.*;
-import model.*;
+import model.Event;
 import services.XmlService;
+import view.ApplicationStarter;
 import view.GUI.MainWindow;
 
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-import javax.xml.bind.JAXBException;
-
-import java.io.File;
-import java.sql.SQLException;
 
 /**
  * Klasa do obsługi kalendarza poprzez terminal znakowy.
  */
-public class TUI {
-	public static RepoController<Event> repoController = new EventController();
-	public static final DatabaseController databaseController = new DatabaseController();
+public class TuiStarter{
+
 	private static Scanner scanner = new Scanner(System.in);
+
+	/**
+	 * Główna metoda klasy.
+	 *
+	 */
+	public static void starter() {
+		System.out.println("Witaj w kalendarzu!");
+		try {
+			menu();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		scanner.close();
+	}
 
 	/**
 	 * Dodaje wydarzenie do listy wydarzeń.
@@ -46,7 +59,7 @@ public class TUI {
 		System.out.println("Podaj miejsce wydarzenia:");
 		place = stringInput();
 
-		repoController.add(new Event(title, description, date, minutesOfDuration, place));
+		ApplicationStarter.repoController.add(new Event(title, description, date, minutesOfDuration, place));
 	}
 
 	/**
@@ -78,7 +91,7 @@ public class TUI {
 	private static void deleteEvent() throws SQLException {
 		showAllEvents(false);
 		System.out.println("Które wydarzenie chcesz usunąć?");
-		repoController.delete(repoController.getEvent((intInput()-1)));
+		ApplicationStarter.repoController.delete(ApplicationStarter.repoController.getEvent((intInput()-1)));
 	}
 
 	/**
@@ -98,7 +111,7 @@ public class TUI {
 		if (choice == 1)
 			loadFromXML();
 		else if (choice == 2)
-			databaseController.loadAndOverrideDataFromDatabaseTUI();
+			ApplicationStarter.databaseController.loadFromDatabeseAndMoveToRepo();
 		else
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNiepoprawna wartość.\n");
 	}
@@ -115,18 +128,7 @@ public class TUI {
 
 	}
 
-	/**
-	 * Główna metoda klasy.
-	 * 
-	 * @param args argumenty wywołania.
-	 * @throws SQLException SQLException.
-	 */
-	public static void main(String[] args) throws SQLException {
-		System.out.println("Witaj w kalendarzu!");
-		menu();
 
-		scanner.close();
-	}
 
 	/**
 	 * Wyświetla menu programu.
@@ -199,7 +201,7 @@ public class TUI {
 
 		System.out.println("Podaj nowe miejsce wydarzenia:");
 		place = stringInput();
-		repoController.replaceEventValues(oldEvent, new Event(title, description, cal, minutesOfDuration, place));
+		ApplicationStarter.repoController.replaceEventValues(oldEvent, new Event(title, description, cal, minutesOfDuration, place));
 	}
 
 	private static void save() {
@@ -208,7 +210,7 @@ public class TUI {
 		if (choice == 1)
 			saveToXML();
 		else if (choice == 2)
-			databaseController.saveToDataBaseTUI();
+			ApplicationStarter.databaseController.saveToDataBase();
 		else
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNiepoprawna wartość.\n");
 	}
@@ -224,7 +226,7 @@ public class TUI {
 	}
 
 	private static void showAllEvents(boolean ifModify) {
-		System.out.println("Wszystkie wydarzenia:\n" + repoController.toString());
+		System.out.println("Wszystkie wydarzenia:\n" + ApplicationStarter.repoController.toString());
 		if (ifModify)
 			showModifyOption();
 	}
@@ -240,8 +242,8 @@ public class TUI {
 	 * @param date Data dnia.
 	 */
 	private static void showEvents(Calendar date) {
-		for (int i = 0; i < repoController.getEventsByDate(date).size(); i++) {
-			System.out.println((i + 1) + ". " + repoController.getEventsByDate(date).get(i).toString());
+		for (int i = 0; i < ApplicationStarter.repoController.getEventsByDate(date).size(); i++) {
+			System.out.println((i + 1) + ". " + ApplicationStarter.repoController.getEventsByDate(date).get(i).toString());
 		}
 	}
 
@@ -252,7 +254,7 @@ public class TUI {
 		if (choice == 0)
 			return;
 		else
-			modify(repoController.getAll().get((choice - 1)));
+			modify(ApplicationStarter.repoController.getAll().get((choice - 1)));
 	}
 
 	/**

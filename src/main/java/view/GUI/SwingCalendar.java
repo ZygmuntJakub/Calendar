@@ -1,10 +1,11 @@
 package view.GUI;
 
 import com.toedter.calendar.JCalendar;
+import view.ApplicationStarter;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
@@ -26,8 +27,11 @@ public class SwingCalendar extends JPanel {
 
         upDateEventsOnCalendar();
 
-        add(calendar.getYearChooser());
-        add(calendar.getMonthChooser());
+        JComponent yearChooser = calendar.getYearChooser();
+        JComponent monthChooser = calendar.getMonthChooser();
+
+        add(yearChooser);
+        add(monthChooser);
         add(jPanel);
         openEditorWindow();
     }
@@ -40,7 +44,7 @@ public class SwingCalendar extends JPanel {
         }
     }
     private void changeButtonColor(JButton btn){
-        if(EventEditorWindow.repoController.getDays(c).contains(btn.getText())){
+        if(ApplicationStarter.repoController.getDays(c).contains(btn.getText())){
             btn.setBackground(Color.RED);
             btn.setOpaque(true);
         }else{
@@ -79,6 +83,12 @@ public class SwingCalendar extends JPanel {
                 }
             });
         }
+    }
+    public void changeMonth(int newValue){
+        Calendar calendar = SwingCalendar.calendar.getCalendar();
+        System.out.println(newValue);
+        calendar.set(Calendar.MONTH, (this.calendar.getMonthChooser().getMonth() + newValue) % 13);
+        SwingCalendar.calendar.setCalendar(calendar);
     }
 
     public Component[] getComponents(JPanel jPanel){

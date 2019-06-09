@@ -1,26 +1,24 @@
 package view.GUI;
 
 import com.github.lgooddatepicker.components.TimePicker;
-import controller.EventController;
 import model.Event;
+import model.WrongEventValueException;
+import view.ApplicationStarter;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class EventEditorWindow extends JFrame implements ListSelectionListener, ActionListener {
 
+    private List<String> eventsTitles;
 
-    public static final EventController repoController = new EventController();
     public static final int MINUTES = 300;
 
     private JButton save;
@@ -33,17 +31,19 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
     private TimePicker timePicker;
     private JSlider minutesSlider;
     private Calendar calendar;
+    private JComponent filter;
 
 
     private JList list;
     private JSplitPane splitPane;
 
     EventEditorWindow(Calendar calendar) {
+        eventsTitles = ApplicationStarter.repoController.getDateTitles(calendar);
 
         this.calendar = calendar;
 
         setTitle("Modyfikacja wydarzeń dla " + calendar.getTime());
-        list = new JList(repoController.getDateTitles(calendar).toArray());
+        list = new JList(eventsTitles.toArray());
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.addListSelectionListener(this);
 
@@ -59,11 +59,17 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
                 if (list.isSelectionEmpty()) {
                     return;
                 }
-                Event oldEvent = repoController.getDateAndTitleEvent(calendar, list.getSelectedValue().toString());
-                Event newEvent = getEventFromPanel();
-                repoController.replaceEventValues(oldEvent, newEvent);
+                Event oldEvent = ApplicationStarter.repoController.getEventByDateAndTime(calendar, list.getSelectedValue().toString());
+                Event newEvent = null;
+                try {
+                    newEvent = getEventFromPanel();
+                } catch (WrongEventValueException ex) {
+                    JOptionPane.showMessageDialog(null, "Podano złą wartość");
+                    ex.printStackTrace();
+                }
+                ApplicationStarter.repoController.replaceEventValues(oldEvent, newEvent);
                 resetView();
-                list.setListData(repoController.getDateTitles(calendar).toArray());
+                list.setListData(ApplicationStarter.repoController.getDateTitles(calendar).toArray());
             }
         });
         newEvent = new JButton("Nowe wydarzenie");
@@ -75,9 +81,9 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
                 if (list.isSelectionEmpty()) {
                     return;
                 }
-                repoController.deleteEventByDateAndTitle(calendar, list.getSelectedValue().toString());
+                ApplicationStarter.repoController.deleteEventByDateAndTitle(calendar, list.getSelectedValue().toString());
                 resetView();
-                list.setListData(repoController.getDateTitles(calendar).toArray());
+                list.setListData(ApplicationStarter.repoController.getDateTitles(calendar).toArray());
                 MainWindow.calendar.upDateEventsOnCalendar();
             }
         });
@@ -100,6 +106,9 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
                 alertLabel.setText("Ustaw alert " + source.getValue() + " minut przed wydarzeniem:");
             }
         });
+        filter = new JPanel();
+        filter.add(new JLabel("Filtruj wydarzenia: "));
+        filter.add(createTextField());
 
 
         editComponent.add(new JLabel("Tytuł:"));
@@ -115,6 +124,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         editComponent.add(save);
         editComponent.add(newEvent);
         editComponent.add(deleteEvent);
+        editComponent.add(filter);
 
 
         //Create a split pane with the two scroll panes in it.
@@ -143,7 +153,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
             return;
         }
         String title = list.getSelectedValue().toString();
-        Event readedEvent = repoController.getDateAndTitleEvent(calendar, title);
+        Event readedEvent = ApplicationStarter.repoController.getEventByDateAndTime(calendar, title);
 
         this.title.setText(readedEvent.getTitle());
         this.desc.setText(readedEvent.getDescription());
@@ -156,22 +166,29 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
 
     }
 
-    private Event getEventFromPanel() {
-        String eventTitle = title.getText();
-        String eventDesc = desc.getText();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH); // Jan = 0, dec = 11
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        int hourOfDay = timePicker.getTime().getHour();
-        int minute = timePicker.getTime().getMinute();
+    private Event getEventFromPanel() throws WrongEventValueException {
+        Event event = null;
+        if (
+                title.getText().equals(null) || title.getText().equals("") ||
+                        desc.getText().equals(null) || desc.getText().equals("") ||
+                        timePicker.getText().equals(null) || timePicker.getText().equals("") ||
+                        place.getText().equals(null) || place.getText().equals("")
 
-        Calendar eventDate = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute);
-
-        Integer eventDuration = minutesSlider.getValue();
-
-        String eventPlace = place.getText();
-
-        Event event = new Event(eventTitle, eventDesc, eventDate, eventDuration, eventPlace);
+        ){
+            throw new WrongEventValueException("Podano złą wartość");
+        }else{
+            String eventTitle = title.getText();
+            String eventDesc = desc.getText();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH); // Jan = 0, dec = 11
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            int hourOfDay = timePicker.getTime().getHour();
+            int minute = timePicker.getTime().getMinute();
+            String eventPlace = place.getText();
+            Calendar eventDate = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute);
+            Integer eventDuration = minutesSlider.getValue();
+            event = new Event(eventTitle, eventDesc, eventDate, eventDuration, eventPlace);
+        }
         return event;
 
     }
@@ -184,11 +201,56 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         this.timePicker.setText("");
     }
 
+    public void filterModel(ListModel model, String filter) {
+        DefaultListModel<String> eventTitles = new DefaultListModel<>();
+        for(int i = 0 ; i < model.getSize() ; i++) eventTitles.add(i, (String) model.getElementAt(i));
+
+
+        for (String s : eventsTitles) {
+            if (!s.startsWith(filter)) {
+                if (eventTitles.contains(s)) {
+                    eventTitles.removeElement(s);
+                }
+            } else {
+                if (!eventTitles.contains(s)) {
+                    eventTitles.addElement(s);
+                }
+            }
+        }
+        list.setListData(eventTitles.toArray());
+    }
+
+    private JTextField createTextField() {
+        final JTextField field = new JTextField(15);
+        field.getDocument().addDocumentListener(new DocumentListener(){
+            @Override public void insertUpdate(DocumentEvent e) { filter(); }
+            @Override public void removeUpdate(DocumentEvent e) { filter(); }
+            @Override public void changedUpdate(DocumentEvent e) {}
+            private void filter() {
+                eventsTitles = ApplicationStarter.repoController.getDateTitles(calendar);
+                String filter = field.getText();
+                filterModel(list.getModel(), filter);
+            }
+        });
+        return field;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        repoController.add(getEventFromPanel());
-        list.setListData(repoController.getDateTitles(calendar).toArray());
-        MainWindow.calendar.upDateEventsOnCalendar();
+        Event event = null;
+        try {
+                event = getEventFromPanel();
+        } catch (WrongEventValueException ex) {
+            JOptionPane.showMessageDialog(null, "Podano złą wartość");
+            ex.printStackTrace();
+        }
+        if(ApplicationStarter.repoController.getEventByDateAndTime(event.getDate(), event.getTitle()) != null){
+            JOptionPane.showMessageDialog(null, "Wydarzenie o podanej nazwie już istnieje!");
+        }else{
+            ApplicationStarter.repoController.add(event);
+            list.setListData(ApplicationStarter.repoController.getDateTitles(calendar).toArray());
+            MainWindow.calendar.upDateEventsOnCalendar();
+        }
 
     }
 

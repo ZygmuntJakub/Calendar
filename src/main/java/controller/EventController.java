@@ -80,15 +80,14 @@ public class EventController implements RepoController<Event> {
      * {@inheritDoc}
      */
     public Event getAlertedEvents(){
-        Events eventsToSort = new Events();
-        eventsToSort.setEvents((ArrayList<Event>) list.getEvents().clone());
-        Collections.sort(eventsToSort.getEvents());
+        Collections.sort(list.getEvents());
         long minutes;
         int compare;
-        for (Event e: eventsToSort.getEvents()) {
+        for (Event e: list.getEvents()) {
             minutes = getDateDiff(Calendar.getInstance().getTime(), e.getDate().getTime(), TimeUnit.MINUTES);
             compare = e.getDate().compareTo(Calendar.getInstance());
-            if(minutes >= 0 && compare != -1 && e.getDuration() <= EventEditorWindow.MINUTES){
+            if(minutes >= 0 && compare != -1 && minutes <= EventEditorWindow.MINUTES){
+                System.out.println(e.getDuration());
                 e.setDuration((int)minutes);
                 return e;
             }
@@ -135,7 +134,7 @@ public class EventController implements RepoController<Event> {
     /**
      * {@inheritDoc}
      */
-    public Event getDateAndTitleEvent(Calendar calendar, String title) {
+    public Event getEventByDateAndTime(Calendar calendar, String title) {
         List<Event> events = new ArrayList<Event>();
         Calendar c;
         Event e;
@@ -203,19 +202,6 @@ public class EventController implements RepoController<Event> {
         list.getEvents().add(three);
     }
 
-    public Event getAlertedEvents(){
-        Events eventsToSort = new Events();
-        eventsToSort.setEvents((ArrayList<Event>) list.getEvents().clone());
-        Collections.sort(eventsToSort.getEvents());
-        long minutes;
-        int compare;
-        for (Event e: eventsToSort.getEvents()) {
-            minutes = getDateDiff(Calendar.getInstance().getTime(), e.getDate().getTime(), TimeUnit.MINUTES);
-            compare = e.getDate().compareTo(Calendar.getInstance());
-            if(minutes >= 0 && compare != -1 && minutes <= EventEditorWindow.MINUTES){
-                e.setDuration((int)minutes);
-                return e;
-            }
     /**
      * {@inheritDoc}
      */

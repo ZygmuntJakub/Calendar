@@ -1,6 +1,8 @@
 package view.GUI;
 
+import com.github.lgooddatepicker.zinternaltools.CalendarSelectionEvent;
 import model.Event;
+import view.ApplicationStarter;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -19,28 +21,9 @@ public class MainWindow extends JFrame {
 
 	MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		initTimer();
 
-		setLayout(new FlowLayout(FlowLayout.LEFT, 60, 10));
 
-		setUpBar();
-		add(pBar);
-		ActionListener pBarLoading = new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				if (pBar.getValue() < 100) {
-					calendar.changeVisible(false);
-					pBar.setValue(pBar.getValue() + 10);
-				} else {
-					timer.stop();
-					pBar.setVisible(false);
-					calendar.changeVisible(true);
-				}
-			}
-		};
-		timer = new Timer(100, pBarLoading);
-		timer.setRepeats(true);
-		timer.start();
-
+		loadingBarOperations();
 		String[] colour = { "DARK", "WHITE", "GREEN", "PINK" };
 		final JComboBox<String> comboBox = new JComboBox<String>(colour);
 		comboBox.addActionListener(new ActionListener() {
@@ -61,7 +44,6 @@ public class MainWindow extends JFrame {
 		});
 		add(calendar);
 		add(color);
-		add(comboBox);
 
 	}
 
@@ -91,7 +73,7 @@ public class MainWindow extends JFrame {
 		Timer timer = new Timer(300, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Event event  = EventEditorWindow.repoController.getAlertedEvents();
+				Event event  = ApplicationStarter.repoController.getAlertedEvents();
 				if(event != null){
 					JOptionPane.showMessageDialog(null, "Uwaga!\n" +
 							"Zaplanowałeś wydarzenie: " + event.getTitle() + "\n" +
@@ -101,6 +83,27 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
+		timer.start();
+	}
+	private void loadingBarOperations(){
+		initTimer();
+		setLayout(new FlowLayout(FlowLayout.LEFT, 60, 10));
+		setUpBar();
+		add(pBar);
+		ActionListener pBarLoading = new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				if (pBar.getValue() < 100) {
+					calendar.changeVisible(false);
+					pBar.setValue(pBar.getValue() + 10);
+				} else {
+					timer.stop();
+					pBar.setVisible(false);
+					calendar.changeVisible(true);
+				}
+			}
+		};
+		timer = new Timer(100, pBarLoading);
+		timer.setRepeats(true);
 		timer.start();
 	}
 }
