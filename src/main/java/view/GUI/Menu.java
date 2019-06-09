@@ -1,6 +1,7 @@
 package view.GUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,7 +15,7 @@ public class Menu extends JMenuBar {
     public Menu() {
 
         menu = new JMenu("Kalendarz");
-        menu.setMnemonic(KeyEvent.VK_A);
+        menu.setMnemonic(KeyEvent.VK_F1);
         menu.getAccessibleContext().setAccessibleDescription(
                 "Główne menu kalendarza");
         add(menu);
@@ -27,10 +28,8 @@ public class Menu extends JMenuBar {
     }
 
     private void setUpAuthors(){
-        authors = new JMenuItem("O programie",
-                KeyEvent.VK_T);
-        authors.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        authors = new JMenuItem("O programie");
+        authors.setAccelerator(KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         authors.getAccessibleContext().setAccessibleDescription(
                 "Informacje na temat autorów");
         authors.addActionListener(new ActionListener() {
@@ -43,10 +42,8 @@ public class Menu extends JMenuBar {
     }
 
     private void setUpSave(){
-        save = new JMenuItem("Zapisz/Odczytaj",
-                KeyEvent.VK_1);
-        save.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        save = new JMenuItem("Zapisz/Odczytaj");
+        save.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         save.getAccessibleContext().setAccessibleDescription(
                 "Zapisz stan aplikacji");
         save.addActionListener(new ActionListener() {

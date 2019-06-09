@@ -1,24 +1,23 @@
 package view.GUI;
 
 import com.github.lgooddatepicker.components.TimePicker;
-import controller.EventController;
 import model.Event;
 import model.WrongEventValueException;
 import view.ApplicationStarter;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class EventEditorWindow extends JFrame implements ListSelectionListener, ActionListener {
+
+    private List<String> eventsTitles;
 
     public static final int MINUTES = 300;
 
@@ -32,17 +31,19 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
     private TimePicker timePicker;
     private JSlider minutesSlider;
     private Calendar calendar;
+    private JComponent filter;
 
 
     private JList list;
     private JSplitPane splitPane;
 
     EventEditorWindow(Calendar calendar) {
+        eventsTitles = ApplicationStarter.repoController.getDateTitles(calendar);
 
         this.calendar = calendar;
 
         setTitle("Modyfikacja wydarzeń dla " + calendar.getTime());
-        list = new JList(ApplicationStarter.repoController.getDateTitles(calendar).toArray());
+        list = new JList(eventsTitles.toArray());
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.addListSelectionListener(this);
 
@@ -105,6 +106,9 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
                 alertLabel.setText("Ustaw alert " + source.getValue() + " minut przed wydarzeniem:");
             }
         });
+        filter = new JPanel();
+        filter.add(new JLabel("Filtruj wydarzenia: "));
+        filter.add(createTextField());
 
 
         editComponent.add(new JLabel("Tytuł:"));
@@ -120,6 +124,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         editComponent.add(save);
         editComponent.add(newEvent);
         editComponent.add(deleteEvent);
+        editComponent.add(filter);
 
 
         //Create a split pane with the two scroll panes in it.
@@ -194,6 +199,39 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         this.place.setText("");
         this.minutesSlider.setValue(30);
         this.timePicker.setText("");
+    }
+
+    public void filterModel(ListModel model, String filter) {
+        DefaultListModel<String> eventTitles = new DefaultListModel<>();
+        for(int i = 0 ; i < model.getSize() ; i++) eventTitles.add(i, (String) model.getElementAt(i));
+
+
+        for (String s : eventsTitles) {
+            if (!s.startsWith(filter)) {
+                if (eventTitles.contains(s)) {
+                    eventTitles.removeElement(s);
+                }
+            } else {
+                if (!eventTitles.contains(s)) {
+                    eventTitles.addElement(s);
+                }
+            }
+        }
+        list.setListData(eventTitles.toArray());
+    }
+
+    private JTextField createTextField() {
+        final JTextField field = new JTextField(15);
+        field.getDocument().addDocumentListener(new DocumentListener(){
+            @Override public void insertUpdate(DocumentEvent e) { filter(); }
+            @Override public void removeUpdate(DocumentEvent e) { filter(); }
+            @Override public void changedUpdate(DocumentEvent e) {}
+            private void filter() {
+                String filter = field.getText();
+                filterModel(list.getModel(), filter);
+            }
+        });
+        return field;
     }
 
     @Override

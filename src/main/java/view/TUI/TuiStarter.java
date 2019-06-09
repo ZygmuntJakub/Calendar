@@ -1,30 +1,27 @@
 package view.TUI;
 
-import controller.*;
-import model.*;
+import model.Event;
 import services.XmlService;
 import view.ApplicationStarter;
 import view.GUI.MainWindow;
 
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-import javax.xml.bind.JAXBException;
-
-import java.io.File;
-import java.sql.SQLException;
 
 /**
  * Klasa do obsługi kalendarza poprzez terminal znakowy.
  */
-public class TuiStarter {
+public class TuiStarter{
 
 	private static Scanner scanner = new Scanner(System.in);
 
 	/**
 	 * Główna metoda klasy.
 	 *
-	 * @throws SQLException SQLException.
 	 */
 	public static void starter() {
 		System.out.println("Witaj w kalendarzu!");
@@ -114,7 +111,7 @@ public class TuiStarter {
 		if (choice == 1)
 			loadFromXML();
 		else if (choice == 2)
-			ApplicationStarter.databaseController.loadAndOverrideDataFromDatabase();
+			ApplicationStarter.databaseController.loadFromDatabeseAndMoveToRepo();
 		else
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNiepoprawna wartość.\n");
 	}

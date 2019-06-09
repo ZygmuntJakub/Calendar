@@ -48,7 +48,7 @@ public class SaveAndLoadWindow extends JFrame implements ActionListener {
 
         readSql.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                databaseController.loadAndOverrideDataFromDatabase();
+                databaseController.loadFromDatabeseAndMoveToRepo();
                 MainWindow.calendar.upDateEventsOnCalendar(); //aktualizacja dat w kalendarzu
             }
         });

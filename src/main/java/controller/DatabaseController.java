@@ -20,9 +20,9 @@ public class DatabaseController {
 	}
 
 	/**
-	 * TODO
+	 * Odpowiada za pobranie wydarzeń z bazy danych i nadpisanie obecnego stanu aplikacji tymi danymi
 	 */
-	public void loadAndOverrideDataFromDatabase() {
+	public void loadFromDatabeseAndMoveToRepo() {
 		ApplicationStarter.repoController.changeListData(getAllEvents());
 	}
 

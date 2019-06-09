@@ -5,8 +5,7 @@ import view.ApplicationStarter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
@@ -28,8 +27,12 @@ public class SwingCalendar extends JPanel {
 
         upDateEventsOnCalendar();
 
-        add(calendar.getYearChooser());
-        add(calendar.getMonthChooser());
+        JComponent yearChooser = calendar.getYearChooser();
+        JComponent monthChooser = calendar.getMonthChooser();
+
+        add(yearChooser);
+        add(monthChooser);
+
         add(jPanel);
         openEditorWindow();
     }
