@@ -135,7 +135,7 @@ public class EventController implements RepoController<Event> {
     /**
      * {@inheritDoc}
      */
-    public Event getDateAndTitleEvent(Calendar calendar, String title) {
+    public Event getEventByDateAndTime(Calendar calendar, String title) {
         List<Event> events = new ArrayList<Event>();
         Calendar c;
         Event e;

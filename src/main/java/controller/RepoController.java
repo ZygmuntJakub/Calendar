@@ -48,7 +48,7 @@ public interface RepoController<T> {
 	 * @param title    Nazwa wydarzenia.
 	 * @return Wydarzenie jeśli istnieje w przeciwnym wypadku null.
 	 */
-	public Event getDateAndTitleEvent(Calendar calendar, String title);
+	public Event getEventByDateAndTime(Calendar calendar, String title);
 
 	/**
 	 * Zwraca nazwy wydarzeń wybranego dnia.

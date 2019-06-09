@@ -13,7 +13,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -60,7 +59,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
                 if (list.isSelectionEmpty()) {
                     return;
                 }
-                Event oldEvent = repoController.getDateAndTitleEvent(calendar, list.getSelectedValue().toString());
+                Event oldEvent = repoController.getEventByDateAndTime(calendar, list.getSelectedValue().toString());
                 Event newEvent = null;
                 try {
                     newEvent = getEventFromPanel();
@@ -150,7 +149,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
             return;
         }
         String title = list.getSelectedValue().toString();
-        Event readedEvent = repoController.getDateAndTitleEvent(calendar, title);
+        Event readedEvent = repoController.getEventByDateAndTime(calendar, title);
 
         this.title.setText(readedEvent.getTitle());
         this.desc.setText(readedEvent.getDescription());
@@ -200,14 +199,20 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Event event = null;
         try {
-            repoController.add(getEventFromPanel());
+                event = getEventFromPanel();
         } catch (WrongEventValueException ex) {
             JOptionPane.showMessageDialog(null, "Podano złą wartość");
             ex.printStackTrace();
         }
-        list.setListData(repoController.getDateTitles(calendar).toArray());
-        MainWindow.calendar.upDateEventsOnCalendar();
+        if(repoController.getEventByDateAndTime(event.getDate(), event.getTitle()) != null){
+            JOptionPane.showMessageDialog(null, "Wydarzenie o podanej nazwie już istnieje!");
+        }else{
+            repoController.add(event);
+            list.setListData(repoController.getDateTitles(calendar).toArray());
+            MainWindow.calendar.upDateEventsOnCalendar();
+        }
 
     }
 
