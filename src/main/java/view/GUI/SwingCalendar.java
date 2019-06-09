@@ -32,7 +32,6 @@ public class SwingCalendar extends JPanel {
 
         add(yearChooser);
         add(monthChooser);
-
         add(jPanel);
         openEditorWindow();
     }
@@ -87,6 +86,7 @@ public class SwingCalendar extends JPanel {
     }
     public void changeMonth(int newValue){
         Calendar calendar = SwingCalendar.calendar.getCalendar();
+        System.out.println(newValue);
         calendar.set(Calendar.MONTH, (this.calendar.getMonthChooser().getMonth() + newValue) % 13);
         SwingCalendar.calendar.setCalendar(calendar);
     }

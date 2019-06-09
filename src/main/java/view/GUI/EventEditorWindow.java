@@ -227,6 +227,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
             @Override public void removeUpdate(DocumentEvent e) { filter(); }
             @Override public void changedUpdate(DocumentEvent e) {}
             private void filter() {
+                eventsTitles = ApplicationStarter.repoController.getDateTitles(calendar);
                 String filter = field.getText();
                 filterModel(list.getModel(), filter);
             }

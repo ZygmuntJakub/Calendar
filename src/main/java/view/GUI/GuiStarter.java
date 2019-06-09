@@ -17,5 +17,6 @@ public class GuiStarter {
         Menu menu = new Menu();
         mainWindow.setJMenuBar(menu);
         SwingConsole.run(mainWindow, 1100, 350);
+
     }
 }
