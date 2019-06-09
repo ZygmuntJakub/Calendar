@@ -2,7 +2,6 @@ package services;
 
 import controller.EventController;
 import controller.Events;
-import model.Event;
 import view.GUI.EventEditorWindow;
 
 import javax.xml.bind.JAXBContext;
