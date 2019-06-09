@@ -1,6 +1,8 @@
 package view.GUI;
 
 import com.toedter.calendar.JCalendar;
+import view.ApplicationStarter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -40,7 +42,7 @@ public class SwingCalendar extends JPanel {
         }
     }
     private void changeButtonColor(JButton btn){
-        if(EventEditorWindow.repoController.getDays(c).contains(btn.getText())){
+        if(ApplicationStarter.repoController.getDays(c).contains(btn.getText())){
             btn.setBackground(Color.RED);
             btn.setOpaque(true);
         }else{

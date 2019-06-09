@@ -2,6 +2,7 @@ package services;
 
 import controller.EventController;
 import controller.Events;
+import view.ApplicationStarter;
 import view.GUI.EventEditorWindow;
 
 import javax.xml.bind.JAXBContext;
@@ -23,7 +24,7 @@ public class XmlService {
     {
         JAXBContext jaxbContext = JAXBContext.newInstance(Events.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        EventEditorWindow.repoController.replaceEvents((Events) jaxbUnmarshaller.unmarshal(file));
-        System.out.println(EventEditorWindow.repoController.getAllTitles());
+        ApplicationStarter.repoController.replaceEvents((Events) jaxbUnmarshaller.unmarshal(file));
+        System.out.println(ApplicationStarter.repoController.getAllTitles());
     }
 }

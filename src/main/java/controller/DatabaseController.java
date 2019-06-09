@@ -2,6 +2,7 @@ package controller;
 
 import model.Event;
 import services.DatabaseService;
+import view.ApplicationStarter;
 import view.GUI.EventEditorWindow;
 import view.TUI.TUI;
 
@@ -24,11 +25,7 @@ public class DatabaseController {
 	 * TODO
 	 */
 	public void loadAndOverrideDataFromDatabase() {
-		EventEditorWindow.repoController.changeListData(getAllEvents());
-	}
-
-	public void loadAndOverrideDataFromDatabaseTUI() {
-		TUI.repoController.changeListData(getAllEvents());
+		ApplicationStarter.repoController.changeListData(getAllEvents());
 	}
 
 	private List<Event> getAllEvents() throws Error {
@@ -64,23 +61,7 @@ public class DatabaseController {
 	public void saveToDataBase() {
 		databaseService.connect();
 
-		List<Event> events = EventEditorWindow.repoController.getAll();
-		String query;
-		databaseService.resetDatabase();
-		for (Event e : events) {
-			query = "INSERT INTO Events(title, description, date, alertBefore, place) VALUES ('" + e.getTitle() + "', '"
-					+ e.getDescription() + "', '" + new Timestamp(e.getDate().getTimeInMillis()) + "', '"
-					+ e.getDuration() + "', '" + e.getPlace() + "');";
-			databaseService.executeUpdate(query);
-		}
-
-		databaseService.disconnect();
-	}
-
-	public void saveToDataBaseTUI() {
-		databaseService.connect();
-
-		List<Event> events = TUI.repoController.getAll();
+		List<Event> events = ApplicationStarter.repoController.getAll();
 		String query;
 		databaseService.resetDatabase();
 		for (Event e : events) {

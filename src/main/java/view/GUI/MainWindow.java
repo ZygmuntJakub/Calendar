@@ -1,6 +1,7 @@
 package view.GUI;
 
 import model.Event;
+import view.ApplicationStarter;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -91,7 +92,7 @@ public class MainWindow extends JFrame {
 		Timer timer = new Timer(300, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Event event  = EventEditorWindow.repoController.getAlertedEvents();
+				Event event  = ApplicationStarter.repoController.getAlertedEvents();
 				if(event != null){
 					JOptionPane.showMessageDialog(null, "Uwaga!\n" +
 							"Zaplanowałeś wydarzenie: " + event.getTitle() + "\n" +
