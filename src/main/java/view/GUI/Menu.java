@@ -22,12 +22,12 @@ public class Menu extends JMenuBar {
         setUpAuthors();
         setUpSave();
 
-        menu.add(authors);
         menu.add(save);
+        menu.add(authors);
     }
 
     private void setUpAuthors(){
-        authors = new JMenuItem("Autorzy",
+        authors = new JMenuItem("O programie",
                 KeyEvent.VK_T);
         authors.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_1, ActionEvent.ALT_MASK));
