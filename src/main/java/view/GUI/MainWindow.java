@@ -19,6 +19,16 @@ public class MainWindow extends JFrame {
 	Timer timer;
 
 	MainWindow() {
+		this.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyChar() == ','){
+					calendar.changeMonth(-1);
+				}else if(e.getKeyChar() == '.'){
+					calendar.changeMonth(1);
+				}
+			}
+		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		loadingBarOperations();
 		String[] colour = { "DARK", "WHITE", "GREEN", "PINK" };

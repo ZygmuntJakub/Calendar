@@ -85,6 +85,11 @@ public class SwingCalendar extends JPanel {
             });
         }
     }
+    public void changeMonth(int newValue){
+        Calendar calendar = SwingCalendar.calendar.getCalendar();
+        calendar.set(Calendar.MONTH, (this.calendar.getMonthChooser().getMonth() + newValue) % 13);
+        SwingCalendar.calendar.setCalendar(calendar);
+    }
 
     public Component[] getComponents(JPanel jPanel){
         Component compo[] = jPanel.getComponents();
