@@ -203,19 +203,6 @@ public class EventController implements RepoController<Event> {
         list.getEvents().add(three);
     }
 
-    public Event getAlertedEvents(){
-        Events eventsToSort = new Events();
-        eventsToSort.setEvents((ArrayList<Event>) list.getEvents().clone());
-        Collections.sort(eventsToSort.getEvents());
-        long minutes;
-        int compare;
-        for (Event e: eventsToSort.getEvents()) {
-            minutes = getDateDiff(Calendar.getInstance().getTime(), e.getDate().getTime(), TimeUnit.MINUTES);
-            compare = e.getDate().compareTo(Calendar.getInstance());
-            if(minutes >= 0 && compare != -1 && minutes <= EventEditorWindow.MINUTES){
-                e.setDuration((int)minutes);
-                return e;
-            }
     /**
      * {@inheritDoc}
      */

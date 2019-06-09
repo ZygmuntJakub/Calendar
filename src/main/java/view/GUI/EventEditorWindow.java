@@ -3,6 +3,7 @@ package view.GUI;
 import com.github.lgooddatepicker.components.TimePicker;
 import controller.EventController;
 import model.Event;
+import model.WrongEventValueException;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -60,7 +61,13 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
                     return;
                 }
                 Event oldEvent = repoController.getDateAndTitleEvent(calendar, list.getSelectedValue().toString());
-                Event newEvent = getEventFromPanel();
+                Event newEvent = null;
+                try {
+                    newEvent = getEventFromPanel();
+                } catch (WrongEventValueException ex) {
+                    JOptionPane.showMessageDialog(null, "Podano złą wartość");
+                    ex.printStackTrace();
+                }
                 repoController.replaceEventValues(oldEvent, newEvent);
                 resetView();
                 list.setListData(repoController.getDateTitles(calendar).toArray());
@@ -156,22 +163,29 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
 
     }
 
-    private Event getEventFromPanel() {
-        String eventTitle = title.getText();
-        String eventDesc = desc.getText();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH); // Jan = 0, dec = 11
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        int hourOfDay = timePicker.getTime().getHour();
-        int minute = timePicker.getTime().getMinute();
+    private Event getEventFromPanel() throws WrongEventValueException {
+        Event event = null;
+        if (
+                title.getText().equals(null) || title.getText().equals("") ||
+                        desc.getText().equals(null) || desc.getText().equals("") ||
+                        timePicker.getText().equals(null) || timePicker.getText().equals("") ||
+                        place.getText().equals(null) || place.getText().equals("")
 
-        Calendar eventDate = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute);
-
-        Integer eventDuration = minutesSlider.getValue();
-
-        String eventPlace = place.getText();
-
-        Event event = new Event(eventTitle, eventDesc, eventDate, eventDuration, eventPlace);
+        ){
+            throw new WrongEventValueException("Podano złą wartość");
+        }else{
+            String eventTitle = title.getText();
+            String eventDesc = desc.getText();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH); // Jan = 0, dec = 11
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            int hourOfDay = timePicker.getTime().getHour();
+            int minute = timePicker.getTime().getMinute();
+            String eventPlace = place.getText();
+            Calendar eventDate = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute);
+            Integer eventDuration = minutesSlider.getValue();
+            event = new Event(eventTitle, eventDesc, eventDate, eventDuration, eventPlace);
+        }
         return event;
 
     }
@@ -186,7 +200,12 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        repoController.add(getEventFromPanel());
+        try {
+            repoController.add(getEventFromPanel());
+        } catch (WrongEventValueException ex) {
+            JOptionPane.showMessageDialog(null, "Podano złą wartość");
+            ex.printStackTrace();
+        }
         list.setListData(repoController.getDateTitles(calendar).toArray());
         MainWindow.calendar.upDateEventsOnCalendar();
 
