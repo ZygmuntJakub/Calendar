@@ -23,7 +23,6 @@ public interface RepoController<T> {
 	 */
 	public void add(T t) throws SQLException;
 
-	public void changeListData(List<Event> list);
 
 	/**
 	 * Usuwa wydarzenie z listy.

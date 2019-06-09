@@ -17,9 +17,10 @@ public class EventController implements RepoController<Event> {
     public EventController() {
         mock();
     }
-    
+
     /**
-     * {@inheritDoc}
+     * Odpowiada za dodanie wydarzenia do kontenera
+     * @param event wydarzenie
      */
     public void add(Event event) {
         try {
@@ -29,16 +30,11 @@ public class EventController implements RepoController<Event> {
         }
         this.list.getEvents().add(event);
     }
-    
-    /**
-     * TODO
-     */
-    public void changeListData(List<Event> list){
-        this.list.setEvents(new ArrayList<>(list));
-    }
+
 
     /**
-     * {@inheritDoc}
+     * Usuwa wskazane wydarzenie z kontenera
+     * @param eventToDelete wydarzenie do usunięcia
      */
     public void delete(Event eventToDelete) {
         try {
@@ -232,6 +228,10 @@ public class EventController implements RepoController<Event> {
         oldEvent.setPlace(newEvent.getPlace());
     }
 
+    /**
+     * Wypisuje wydarzenia z kontenera
+     * @return sformatowane informacje o wszystkich wydarzeniach
+     */
 	@Override
 	public String toString() {
 		String string = new String();

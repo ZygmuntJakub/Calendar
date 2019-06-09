@@ -35,6 +35,9 @@ public class Event implements Serializable, Comparable<Event> {
      */
     private String place;
 
+    /**
+     * Pusty konstruktor potrzebny do generowania/odczytywania XML
+     */
     public Event() {
     }
 
@@ -163,6 +166,10 @@ public class Event implements Serializable, Comparable<Event> {
 				+ description + ", miejsce: " + place + ".\n";
 	}
 
+    /**
+     * Unikalna identyfikacja obiektów
+     * @return  unikalna wartość liczbowa dla każdego unikalnego obiektu
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -173,6 +180,11 @@ public class Event implements Serializable, Comparable<Event> {
         return result;
     }
 
+    /**
+     * Prównywanie typów obiektowych, porównuje referencję
+     * @param obj obiekt do porównania
+     * @return wynik porównania referencji (jeśli ta sama to true)
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -200,7 +212,11 @@ public class Event implements Serializable, Comparable<Event> {
         return true;
     }
 
-
+    /**
+     * Sortuje wydarzenia po dacie
+     * @param o wydarzenie do porównania
+     * @return wartość po porównaniu
+     */
     @Override
     public int compareTo(Event o) {
         return this.getDate().compareTo(o.getDate());
