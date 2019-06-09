@@ -3,8 +3,6 @@ package controller;
 import model.Event;
 import services.DatabaseService;
 import view.ApplicationStarter;
-import view.GUI.EventEditorWindow;
-import view.TUI.TUI;
 
 import java.sql.*;
 import java.util.ArrayList;

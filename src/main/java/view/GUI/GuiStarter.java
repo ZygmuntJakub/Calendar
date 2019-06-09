@@ -6,11 +6,11 @@ import services.XmlService;
 
 import java.util.Locale;
 
-public class CalendarApplication {
+public class GuiStarter {
 
     public static final XmlService xmlService = new XmlService();
 
-    public static void main(String[] args) {
+    public static void starter() {
         Locale.setDefault(new Locale("pl", "PL"));
         MainWindow mainWindow = new MainWindow();
         Menu menu = new Menu();

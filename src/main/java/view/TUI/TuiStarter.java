@@ -17,9 +17,25 @@ import java.sql.SQLException;
 /**
  * Klasa do obsługi kalendarza poprzez terminal znakowy.
  */
-public class TUI {
+public class TuiStarter {
 
 	private static Scanner scanner = new Scanner(System.in);
+
+	/**
+	 * Główna metoda klasy.
+	 *
+	 * @throws SQLException SQLException.
+	 */
+	public static void starter() {
+		System.out.println("Witaj w kalendarzu!");
+		try {
+			menu();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		scanner.close();
+	}
 
 	/**
 	 * Dodaje wydarzenie do listy wydarzeń.
@@ -115,18 +131,7 @@ public class TUI {
 
 	}
 
-	/**
-	 * Główna metoda klasy.
-	 * 
-	 * @param args argumenty wywołania.
-	 * @throws SQLException SQLException.
-	 */
-	public static void main(String[] args) throws SQLException {
-		System.out.println("Witaj w kalendarzu!");
-		menu();
 
-		scanner.close();
-	}
 
 	/**
 	 * Wyświetla menu programu.
