@@ -21,7 +21,7 @@ public class GuiStarter {
         MainWindow mainWindow = new MainWindow();
         Menu menu = new Menu();
         mainWindow.setJMenuBar(menu);
-        SwingConsole.run(mainWindow, 1300, 350);
+        SwingConsole.run(mainWindow, 1250, 400);
 
     }
     private static void guiLookSetUp(){

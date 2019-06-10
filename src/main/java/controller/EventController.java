@@ -82,13 +82,24 @@ public class EventController implements RepoController<Event> {
         for (Event e: list.getEvents()) {
             minutes = getDateDiff(Calendar.getInstance().getTime(), e.getDate().getTime(), TimeUnit.MINUTES);
             compare = e.getDate().compareTo(Calendar.getInstance());
-            if(minutes >= 0 && compare != -1 && minutes <= EventEditorWindow.MINUTES){
-                System.out.println(e.getDuration());
-                e.setDuration((int)minutes);
+            if(minutes >= 0 && compare != -1 && minutes <= EventEditorWindow.MINUTES && e.getDuration() <= EventEditorWindow.MINUTES){
+                e.setDuration((int) minutes);
                 return e;
             }
         }
         return null;
+    }
+
+    /**
+     * Usuwanie wydarzeń starszych niż podana data
+     * @param calendar
+     */
+    public void deleteEventsOlderThan(Calendar calendar){
+        for(int i = 0 ; i < list.getEvents().size() ; i++){
+            if(list.getEvents().get(i).getDate().compareTo(calendar) == -1){
+                list.getEvents().remove(i);
+            }
+        }
     }
 
     /**

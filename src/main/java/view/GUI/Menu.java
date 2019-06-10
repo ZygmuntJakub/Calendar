@@ -1,10 +1,14 @@
 package view.GUI;
 
 import com.opencsv.CSVWriter;
+import com.sun.tools.javac.Main;
 import model.Event;
+import services.CsvService;
 import view.ApplicationStarter;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +29,8 @@ public class Menu extends JMenuBar {
     JMenuItem authors;
     JMenuItem save;
     JMenuItem csv;
+    JMenuItem settings;
+    JFrame settingsFrame;
 
     public Menu() {
 
@@ -37,10 +43,12 @@ public class Menu extends JMenuBar {
         setUpAuthors();
         setUpSave();
         exportToCsv();
+        setUpSettings();
 
         menu.add(save);
         menu.add(authors);
         menu.add(csv);
+        menu.add(settings);
     }
 
     private void setUpAuthors(){
@@ -51,7 +59,7 @@ public class Menu extends JMenuBar {
         authors.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ImageIcon icon = new ImageIcon("icon.png");
-                JOptionPane.showMessageDialog(null, "Autorzy: \nJakub Nozderka\nJakub Zygmunt",
+                JOptionPane.showMessageDialog(null, "Program wykonany na zajęcia\nProgramowanie Komponentowe\nAutorzy: \nJakub Nozderka\nJakub Zygmunt",
                         "Autorzy", JOptionPane.INFORMATION_MESSAGE, icon);
             }
         });
@@ -70,6 +78,29 @@ public class Menu extends JMenuBar {
             }
         });
     }
+    private void setUpSettings(){
+        settings = new JMenuItem("Ustawienia");
+        settings.setAccelerator(KeyStroke.getKeyStroke('M', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        settings.getAccessibleContext().setAccessibleDescription(
+                "ZUstawienia aplikacji");
+        settings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame panel = new JFrame();
+                JColorChooser colorChooser = new JColorChooser();
+                colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        Color newColor = colorChooser.getColor();
+                        MainWindow.calendar.setColor(newColor);
+                        MainWindow.calendar.upDateEventsOnCalendar();
+                    }
+                });
+                panel.add(colorChooser);
+                SwingConsole.run(panel, 300,300);
+            }
+        });
+    }
     private void exportToCsv(){
         csv = new JMenuItem("Eksportuj do CSV");
         csv.setAccelerator(KeyStroke.getKeyStroke('E', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
@@ -77,39 +108,7 @@ public class Menu extends JMenuBar {
                 "Eksportuj do CSV");
         csv.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                File file = new File("calendar.csv");
-                try {
-                    FileWriter outputfile = new FileWriter(file);
-
-                    // obiekt filewriter jako parametr CSVWriter
-                    CSVWriter writer = new CSVWriter(outputfile);
-
-                    // nagłówki CSV
-                    String[] header = { "Subject", "Start Date", "Start Time", "Description", "Location" };
-                    writer.writeNext(header);
-                    String[] items = null;
-
-
-                    List<String> data = new ArrayList<>();
-                    SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy/MM/dd");
-                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
-                    for (Event event : ApplicationStarter.repoController.getAll()) {
-                        data.add(event.getTitle());
-                        data.add(dataFormat.format(event.getDate().getTime()));
-                        data.add(timeFormat.format(event.getDate().getTime()));
-                        data.add(event.getDescription());
-                        data.add(event.getPlace());
-                        items = data.toArray(new String[data.size()]);
-                        writer.writeNext(items);
-                        data.clear();
-                    }
-
-                    writer.close();
-                }
-                catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                CsvService.exportToCsv();
             }
         });
     }

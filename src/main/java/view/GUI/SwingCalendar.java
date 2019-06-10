@@ -19,6 +19,7 @@ public class SwingCalendar extends JPanel {
     JPanel jPanel;
     private static JCalendar calendar = new JCalendar();
     private Calendar c;
+    private Color color;
 
     /**
      * Dodajemy odpowiednie komponenty z JCalendar
@@ -26,6 +27,7 @@ public class SwingCalendar extends JPanel {
     SwingCalendar() {
         calendar.getDayChooser().setAlwaysFireDayProperty(false);
         c = Calendar.getInstance();
+        color = Color.RED;
 
         changeVisible(false);
 
@@ -56,7 +58,7 @@ public class SwingCalendar extends JPanel {
     }
     private void changeButtonColor(JButton btn){
         if(ApplicationStarter.repoController.getDays(c).contains(btn.getText())){
-            btn.setBackground(Color.RED);
+            btn.setBackground(color);
             btn.setOpaque(true);
         }else{
             btn.setBackground(Color.WHITE);
@@ -67,7 +69,7 @@ public class SwingCalendar extends JPanel {
     /**
      * Aktualizacja przycisków kalendarza, powinno się ją wywołać po zmianach w kontenerze zdarzeń
      */
-    public  void upDateEventsOnCalendar(){
+    public void upDateEventsOnCalendar(){
         Component compo[] = getComponents(jPanel);
         for (Component comp : compo) {
             if (!(comp instanceof JButton))
@@ -102,5 +104,9 @@ public class SwingCalendar extends JPanel {
     private Component[] getComponents(JPanel jPanel){
         Component compo[] = jPanel.getComponents();
         return compo;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

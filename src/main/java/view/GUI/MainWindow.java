@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 
 /**
  * Główne okno aplickacji
@@ -15,13 +16,14 @@ public class MainWindow extends JFrame {
 
 	private static final long serialVersionUID = -9057551984778158304L;
 	private JProgressBar pBar = new JProgressBar();
-	private Label color = new Label("Kolor: ");
+	private JButton deleteOlderEvents = new JButton("Usuń wydarzenia, które już się odbyły");
+	private Timer timer;
 	/**
 	 * Komponent odpoiwedzialny za wygląd kalendarza
 	 */
 	public static SwingCalendar calendar = new SwingCalendar();
 
-	Timer timer;
+
 
 	/**
 	 * Dodaje komponenty do okna aplikacji
@@ -29,31 +31,19 @@ public class MainWindow extends JFrame {
 	MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		loadingBarOperations();
-		String[] colour = { "DARK", "WHITE", "GREEN", "PINK" };
-		final JComboBox<String> comboBox = new JComboBox<String>(colour);
-		comboBox.addActionListener(new ActionListener() {
-
+		deleteOlderEvents.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				String choose = (String) comboBox.getSelectedItem();
-
-				if (choose.equals("DARK"))
-					changeBackground(Color.GRAY);
-				if (choose.equals("WHITE"))
-					changeBackground(Color.WHITE);
-				if (choose.equals("PINK"))
-					changeBackground(Color.PINK);
-				if (choose.equals("GREEN"))
-					changeBackground(Color.GREEN);
+				ApplicationStarter.repoController.deleteEventsOlderThan(Calendar.getInstance());
+				calendar.upDateEventsOnCalendar();
 			}
-
 		});
+		add(deleteOlderEvents);
 		add(calendar);
-		add(color);
-		add(comboBox);
 
 	}
 
-	private void changeBackground(Color color) {
+	public void changeBackground(Color color) {
 
 		this.getContentPane().setBackground(color);
 	}
@@ -69,6 +59,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Event event  = ApplicationStarter.repoController.getAlertedEvents();
 				if(event != null){
+					Toolkit.getDefaultToolkit().beep();
 					JOptionPane.showMessageDialog(null, "Uwaga!\n" +
 							"Zaplanowałeś wydarzenie: " + event.getTitle() + "\n" +
 							"na dzień " + event.getDate().getTime() + "\n" +
