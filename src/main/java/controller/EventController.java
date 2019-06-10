@@ -101,9 +101,9 @@ public class EventController implements RepoController<Event> {
      * @param calendar data, przed którą zostaną usunięte wszystkie wydarzenia
      */
     public void deleteEventsOlderThan(Calendar calendar){
-        for(int i = 0 ; i < list.getEvents().size() ; i++){
-            if(list.getEvents().get(i).getDate().compareTo(calendar) == -1){
-                list.getEvents().remove(i);
+        for(int i = getAll().size()-1 ; i >= 0; i--){
+            if(getAll().get(i).getDate().compareTo(calendar) == -1){
+                deleteEventByDateAndTitle(getAll().get(i).getDate(), getAll().get(i).getTitle());
             }
         }
     }

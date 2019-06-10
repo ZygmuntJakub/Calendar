@@ -23,8 +23,6 @@ public class MainWindow extends JFrame {
 	 */
 	public static SwingCalendar calendar = new SwingCalendar();
 
-
-
 	/**
 	 * Dodaje komponenty do okna aplikacji
 	 */
