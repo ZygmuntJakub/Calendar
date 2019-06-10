@@ -19,8 +19,9 @@ import java.util.List;
  * Odpowiada za okno edycji wskazanego wydarzenia (operacje CRUD)
  */
 public class EventEditorWindow extends JFrame implements ListSelectionListener, ActionListener {
+	private static final long serialVersionUID = 7117203791214798523L;
 
-    private List<String> eventsTitles;
+	private List<String> eventsTitles;
 
     /**
      * stała, która definiuje maksymalną ilość minut dla powiadomienia o wydarzeniu

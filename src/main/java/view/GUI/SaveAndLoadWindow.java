@@ -15,7 +15,9 @@ import java.io.File;
  * Okno aplikacji do odczytu/zapisu dancyh w formacie XML lub bazy danych
  */
 public class SaveAndLoadWindow extends JFrame implements ActionListener {
-    public static final DatabaseController databaseController = new DatabaseController();
+	private static final long serialVersionUID = -8879325017847495557L;
+
+	public static final DatabaseController databaseController = new DatabaseController();
 
     private JButton openButton, saveButton;
     private JFileChooser fc = new JFileChooser();

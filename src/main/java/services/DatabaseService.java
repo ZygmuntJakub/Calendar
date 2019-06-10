@@ -14,7 +14,6 @@ public class DatabaseService {
 
     private Connection con;
     private Statement stmt;
-    private ResultSet rs;
 
     /**
      * Połączenie z bazą danych

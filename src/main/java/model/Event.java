@@ -15,6 +15,10 @@ import java.util.Locale;
 public class Event implements Serializable, Comparable<Event> {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8521734256254077509L;
+	/**
      * Tytuł wydarzenia
      */
     private String title;

@@ -2,7 +2,6 @@ package view;
 
 import controller.DatabaseController;
 import controller.EventController;
-import services.XmlService;
 import view.GUI.GuiStarter;
 import view.TUI.TuiStarter;
 
