@@ -1,7 +1,5 @@
 package services;
 
-import com.mysql.cj.jdbc.ServerPreparedStatement;
-
 import java.sql.*;
 
 /**

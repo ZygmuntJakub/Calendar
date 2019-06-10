@@ -215,8 +215,8 @@ public class EventController implements RepoController<Event> {
 	 */
 	private void mock() {
 		Event one = new Event("Spotkanie", "Bardzo ważne", Calendar.getInstance(), 12, "LODEX");
-		Event two = new Event("Wizyta", "Dentysta", new GregorianCalendar(2019, 5, 3, 1, 12, 10), 230, "KAKA");
-		Event three = new Event("Wizyta", "Dentysta", new GregorianCalendar(2019, 5, 4, 1, 12, 10), 200, "KAKA");
+		Event two = new Event("Wizyta", "Dentysta", new GregorianCalendar(2019, 5, 3, 1, 12, 10), 230, "gabinet");
+		Event three = new Event("Konferencja", "Targi", new GregorianCalendar(2019, 5, 4, 1, 12, 10), 200, "Hala A");
 		list.getEvents().add(one);
 		list.getEvents().add(two);
 		list.getEvents().add(three);
