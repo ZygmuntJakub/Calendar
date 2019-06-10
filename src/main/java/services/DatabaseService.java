@@ -1,7 +1,5 @@
 package services;
 
-import com.mysql.cj.jdbc.ServerPreparedStatement;
-
 import java.sql.*;
 
 /**
@@ -16,7 +14,6 @@ public class DatabaseService {
 
     private Connection con;
     private Statement stmt;
-    private ResultSet rs;
 
     /**
      * Połączenie z bazą danych

@@ -1,7 +1,5 @@
 package view.GUI;
 
-
-import services.XmlService;
 import javax.swing.*;
 import java.util.Locale;
 

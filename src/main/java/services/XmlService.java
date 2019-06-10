@@ -3,7 +3,6 @@ package services;
 import controller.EventController;
 import controller.Events;
 import view.ApplicationStarter;
-import view.GUI.EventEditorWindow;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

@@ -29,7 +29,7 @@ public class EventController implements RepoController<Event> {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		this.list.getEvents().add(event);
+		EventController.list.getEvents().add(event);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class EventController implements RepoController<Event> {
 		} catch (NoEventException e) {
 			e.printStackTrace();
 		}
-		this.list.getEvents().remove(eventToDelete);
+		EventController.list.getEvents().remove(eventToDelete);
 	}
 
 	/**
@@ -150,7 +150,6 @@ public class EventController implements RepoController<Event> {
 	 * {@inheritDoc}
 	 */
 	public Event getEventByDateAndTime(Calendar calendar, String title) {
-		List<Event> events = new ArrayList<Event>();
 		Calendar c;
 		Event e;
 		for (int i = 0; i < list.getEvents().size(); i++) {

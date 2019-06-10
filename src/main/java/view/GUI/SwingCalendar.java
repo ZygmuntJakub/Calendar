@@ -15,8 +15,8 @@ import java.util.GregorianCalendar;
  * Komponent odpowiedziany za widok kalendarza
  */
 public class SwingCalendar extends JPanel {
-
-    JPanel jPanel;
+	private static final long serialVersionUID = 4813505998973310750L;
+	JPanel jPanel;
     private static JCalendar calendar = new JCalendar();
     private Calendar c;
     private Color color;
