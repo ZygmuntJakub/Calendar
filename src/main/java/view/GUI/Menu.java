@@ -1,7 +1,6 @@
 package view.GUI;
 
 import com.opencsv.CSVWriter;
-import com.sun.tools.javac.Main;
 import model.Event;
 import services.CsvService;
 import view.ApplicationStarter;
