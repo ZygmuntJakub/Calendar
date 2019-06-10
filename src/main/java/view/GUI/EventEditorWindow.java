@@ -15,11 +15,16 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-
+/**
+ * Odpowiada za okno edycji wskazanego wydarzenia (operacje CRUD)
+ */
 public class EventEditorWindow extends JFrame implements ListSelectionListener, ActionListener {
 
     private List<String> eventsTitles;
 
+    /**
+     * stała, która definiuje maksymalną ilość minut dla powiadomienia o wydarzeniu
+     */
     public static final int MINUTES = 300;
 
     private JButton save;
@@ -33,23 +38,22 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
     private JSlider minutesSlider;
     private Calendar calendar;
     private JComponent filter;
-
-
     private JList list;
     private JSplitPane splitPane;
 
+    /**
+     * Tworzymy listę wydarzeń oraz panel do edycji wskazanego wydarzenia, które umieszczamy w JSplitPane
+     * @param calendar data wydarzenia potrzbna do identyfikacji wydarzeń
+     */
     EventEditorWindow(Calendar calendar) {
-        eventsTitles = ApplicationStarter.repoController.getDateTitles(calendar);
-
         this.calendar = calendar;
-
+        eventsTitles = ApplicationStarter.repoController.getDateTitles(calendar);
         setTitle("Modyfikacja wydarzeń dla " + calendar.getTime());
         list = new JList(eventsTitles.toArray());
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.addListSelectionListener(this);
 
         JScrollPane listScrollPane = new JScrollPane(list);
-
 
         editComponent = new JPanel();
         editComponent.setLayout(new GridLayout(7, 1));
@@ -111,7 +115,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         });
         filter = new JPanel();
         filter.add(new JLabel("Filtruj wydarzenia: "));
-        filter.add(createTextField());
+        filter.add(createFilterTextField());
 
 
         editComponent.add(new JLabel("Tytuł:"));
@@ -130,25 +134,23 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         editComponent.add(filter);
 
 
-        //Create a split pane with the two scroll panes in it.
+        //twoorzenie split pane
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 listScrollPane, editComponent);
         splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(150);
-
-        //Provide minimum sizes for the two components in the split pane.
         Dimension minimumSize = new Dimension(100, 50);
         listScrollPane.setMinimumSize(minimumSize);
-        //editPane.setMinimumSize(minimumSize);
-
-        //Provide a preferred size for the split pane.
         splitPane.setPreferredSize(new Dimension(400, 200));
 
         add(splitPane);
 
     }
 
-    //Listens to the list
+    /**
+     * Handler do listy wydarzeń
+     * @param e zdarzenie dla listy
+     */
     public void valueChanged(ListSelectionEvent e) {
 
         JList list = (JList) e.getSource();
@@ -169,6 +171,11 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
 
     }
 
+    /**
+     * Pobiera wartości z okna edycji i zapisuje jako obiekt Event (dodatkowo sprawdza czy wszystkie pola są zainicjalizowane niepustymi wartościami)
+     * @return wydarzenie na podstawie danych z okna edycji
+     * @throws WrongEventValueException zostanie rzucony jeżeli użytkownik wprowadzi złe dane do formularza
+     */
     private Event getEventFromPanel() throws WrongEventValueException {
         Event event = null;
         if (
@@ -204,7 +211,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         this.timePicker.setText("");
     }
 
-    public void filterModel(ListModel model, String filter) {
+    private void filterModel(ListModel model, String filter) {
         DefaultListModel<String> eventTitles = new DefaultListModel<>();
         for(int i = 0 ; i < model.getSize() ; i++) eventTitles.add(i, (String) model.getElementAt(i));
 
@@ -223,7 +230,8 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         list.setListData(eventTitles.toArray());
     }
 
-    private JTextField createTextField() {
+
+    private JTextField createFilterTextField() {
         final JTextField field = new JTextField(15);
         field.getDocument().addDocumentListener(new DocumentListener(){
             @Override public void insertUpdate(DocumentEvent e) { filter(); }
@@ -237,7 +245,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         });
         return field;
     }
-    public void checkSaveButton(){
+    private void checkSaveButton(){
         Timer timer = new Timer(300, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -251,6 +259,10 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         timer.start();
     }
 
+    /**
+     * Handler dla przycisku dodawania nowego wydarzenia
+     * @param e zdarzenie
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Event event = null;

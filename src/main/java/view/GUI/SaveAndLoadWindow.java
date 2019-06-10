@@ -11,7 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-
+/**
+ * Okno aplikacji do odczytu/zapisu dancyh w formacie XML lub bazy danych
+ */
 public class SaveAndLoadWindow extends JFrame implements ActionListener {
     public static final DatabaseController databaseController = new DatabaseController();
 
@@ -36,7 +38,7 @@ public class SaveAndLoadWindow extends JFrame implements ActionListener {
         add(tabbedPane);
     }
 
-    protected JComponent sqlPanel(String text) {
+    private JComponent sqlPanel(String text) {
         JButton saveSql = new JButton("Zapisz");
         JButton readSql = new JButton("Otwórz");
 
@@ -63,7 +65,7 @@ public class SaveAndLoadWindow extends JFrame implements ActionListener {
         return panel;
     }
 
-    protected JComponent xmlPanel(String text) {
+    private JComponent xmlPanel(String text) {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Tylko *.xml", "xml", "XML");
         fc.setFileFilter(filter);
         JPanel panel = new JPanel(false);
@@ -87,6 +89,10 @@ public class SaveAndLoadWindow extends JFrame implements ActionListener {
         return panel;
     }
 
+    /**
+     * Handler dla przycisków do odczytu/zapisu XML
+     * @param e zdarzenie
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == openButton) {

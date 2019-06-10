@@ -16,7 +16,6 @@ import java.util.Scanner;
  * Klasa do obsługi kalendarza poprzez terminal znakowy.
  */
 public class TuiStarter{
-
 	private static Scanner scanner = new Scanner(System.in);
 
 	/**

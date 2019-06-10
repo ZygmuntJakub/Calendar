@@ -11,12 +11,18 @@ import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * Komponent odpowiedziany za widok kalendarza
+ */
 public class SwingCalendar extends JPanel {
 
     JPanel jPanel;
     private static JCalendar calendar = new JCalendar();
     private Calendar c;
 
+    /**
+     * Dodajemy odpowiednie komponenty z JCalendar
+     */
     SwingCalendar() {
         calendar.getDayChooser().setAlwaysFireDayProperty(false);
         c = Calendar.getInstance();
@@ -37,6 +43,10 @@ public class SwingCalendar extends JPanel {
         openEditorWindow();
     }
 
+    /**
+     * Zmienia widoczność kalendarza
+     * @param visible true - pokaż kalendarz, false - ukryj kalendarz
+     */
     public void changeVisible(boolean visible) {
         if (visible) {
             this.setVisible(true);
@@ -54,6 +64,9 @@ public class SwingCalendar extends JPanel {
         }
     }
 
+    /**
+     * Aktualizacja przycisków kalendarza, powinno się ją wywołać po zmianach w kontenerze zdarzeń
+     */
     public  void upDateEventsOnCalendar(){
         Component compo[] = getComponents(jPanel);
         for (Component comp : compo) {
@@ -69,7 +82,7 @@ public class SwingCalendar extends JPanel {
             });
         }
     }
-    public void openEditorWindow(){
+    private void openEditorWindow(){
         Component compo[] = getComponents(jPanel);
         for (Component comp : compo) {
             if (!(comp instanceof JButton))
@@ -85,14 +98,8 @@ public class SwingCalendar extends JPanel {
             });
         }
     }
-    public void changeMonth(int newValue){
-        Calendar calendar = SwingCalendar.calendar.getCalendar();
-        System.out.println(newValue);
-        calendar.set(Calendar.MONTH, (this.calendar.getMonthChooser().getMonth() + newValue) % 13);
-        SwingCalendar.calendar.setCalendar(calendar);
-    }
 
-    public Component[] getComponents(JPanel jPanel){
+    private Component[] getComponents(JPanel jPanel){
         Component compo[] = jPanel.getComponents();
         return compo;
     }

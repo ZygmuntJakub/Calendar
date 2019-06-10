@@ -1,28 +1,33 @@
 package view.GUI;
 
-import com.github.lgooddatepicker.zinternaltools.CalendarSelectionEvent;
 import model.Event;
 import view.ApplicationStarter;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+/**
+ * Główne okno aplickacji
+ */
 public class MainWindow extends JFrame {
 
 	private static final long serialVersionUID = -9057551984778158304L;
-	JProgressBar pBar = new JProgressBar();
-	Label color = new Label("Kolor: ");
+	private JProgressBar pBar = new JProgressBar();
+	private Label color = new Label("Kolor: ");
+	/**
+	 * Komponent odpoiwedzialny za wygląd kalendarza
+	 */
 	public static SwingCalendar calendar = new SwingCalendar();
 
 	Timer timer;
 
+	/**
+	 * Dodaje komponenty do okna aplikacji
+	 */
 	MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
 		loadingBarOperations();
 		String[] colour = { "DARK", "WHITE", "GREEN", "PINK" };
 		final JComboBox<String> comboBox = new JComboBox<String>(colour);
@@ -53,24 +58,12 @@ public class MainWindow extends JFrame {
 		this.getContentPane().setBackground(color);
 	}
 
-	class RadioColorListener implements ActionListener { // klasa wewnętrzna
-
-		public void actionPerformed(ActionEvent e) {
-			String choose = e.getActionCommand();
-
-			if (choose.equals("Dark"))
-				changeBackground(Color.GRAY);
-			if (choose.equals("White"))
-				changeBackground(Color.WHITE);
-		}
-	}
-
 	private void setUpBar() {
 		pBar.setValue(0);
 		pBar.setStringPainted(true);
 	}
 
-	public void initTimer(){
+	private void timerForAlert(){
 		Timer timer = new Timer(300, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -87,7 +80,7 @@ public class MainWindow extends JFrame {
 		timer.start();
 	}
 	private void loadingBarOperations(){
-		initTimer();
+		timerForAlert();
 		setLayout(new FlowLayout(FlowLayout.LEFT, 60, 10));
 		setUpBar();
 		add(pBar);

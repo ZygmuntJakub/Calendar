@@ -1,17 +1,20 @@
 package view.GUI;
 
 
-import services.DatabaseService;
 import services.XmlService;
-
 import javax.swing.*;
-import java.awt.event.*;
 import java.util.Locale;
 
+/**
+ * Uruchamia aplikację w trybie GUI
+ */
 public class GuiStarter {
 
-    public static final XmlService xmlService = new XmlService();
 
+
+    /**
+     * Tworzy główne okno aplikacji
+     */
     public static void starter() {
         guiLookSetUp();
         Locale.setDefault(new Locale("pl", "PL"));
