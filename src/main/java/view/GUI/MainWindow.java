@@ -44,6 +44,7 @@ public class MainWindow extends JFrame {
 		});
 		add(calendar);
 		add(color);
+		add(comboBox);
 
 	}
 

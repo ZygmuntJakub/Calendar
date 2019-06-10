@@ -24,6 +24,7 @@ public class SwingCalendar extends JPanel {
         changeVisible(false);
 
         jPanel = calendar.getDayChooser().getDayPanel();
+        jPanel.setPreferredSize(new Dimension(800, 300));
 
         upDateEventsOnCalendar();
 

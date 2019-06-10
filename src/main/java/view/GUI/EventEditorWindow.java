@@ -53,11 +53,13 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
 
         editComponent = new JPanel();
         editComponent.setLayout(new GridLayout(7, 1));
-        save = new JButton("Zapisz");
+        save = new JButton("Zapisz modyfikację wydarzenia");
+        checkSaveButton();
+        save.setEnabled(false);
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (list.isSelectionEmpty()) {
+                if (eventsTitles.size() == 0) {
                     return;
                 }
                 Event oldEvent = ApplicationStarter.repoController.getEventByDateAndTime(calendar, list.getSelectedValue().toString());
@@ -234,6 +236,19 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
             }
         });
         return field;
+    }
+    public void checkSaveButton(){
+        Timer timer = new Timer(300, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (eventsTitles.size() == 0 || list.isSelectionEmpty()) {
+                    save.setEnabled(false);
+                } else {
+                    save.setEnabled(true);
+                }
+            }
+        });
+        timer.start();
     }
 
     @Override
