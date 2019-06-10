@@ -23,7 +23,7 @@ public class DatabaseController {
 	 * Odpowiada za pobranie wydarzeń z bazy danych i nadpisanie obecnego stanu aplikacji tymi danymi
 	 */
 	public void loadFromDatabeseAndMoveToRepo() {
-		ApplicationStarter.repoController.resetRepository(getAllEvents());
+		ApplicationStarter.repoController.replaceEvents(new Events((ArrayList<Event>) getAllEvents()));
 	}
 
 	private List<Event> getAllEvents() throws Error {

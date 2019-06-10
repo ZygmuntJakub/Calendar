@@ -1,16 +1,28 @@
 package view.GUI;
 
+import com.opencsv.CSVWriter;
+import model.Event;
+import view.ApplicationStarter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class Menu extends JMenuBar {
 
     JMenu menu, submenu;
     JMenuItem authors;
     JMenuItem save;
+    JMenuItem csv;
 
     public Menu() {
 
@@ -22,9 +34,11 @@ public class Menu extends JMenuBar {
 
         setUpAuthors();
         setUpSave();
+        exportToCsv();
 
         menu.add(save);
         menu.add(authors);
+        menu.add(csv);
     }
 
     private void setUpAuthors(){
@@ -54,4 +68,48 @@ public class Menu extends JMenuBar {
             }
         });
     }
+    private void exportToCsv(){
+        csv = new JMenuItem("Eksportuj do CSV");
+        csv.setAccelerator(KeyStroke.getKeyStroke('E', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        csv.getAccessibleContext().setAccessibleDescription(
+                "Eksportuj do CSV");
+        csv.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                File file = new File("calendar.csv");
+                try {
+                    FileWriter outputfile = new FileWriter(file);
+
+                    // obiekt filewriter jako parametr CSVWriter
+                    CSVWriter writer = new CSVWriter(outputfile);
+
+                    // nagłówki CSV
+                    String[] header = { "Subject", "Start Date", "Start Time", "Description", "Location" };
+                    writer.writeNext(header);
+                    String[] items = null;
+
+
+                    List<String> data = new ArrayList<>();
+                    SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
+                    for (Event event : ApplicationStarter.repoController.getAll()) {
+                        data.add(event.getTitle());
+                        data.add(dataFormat.format(event.getDate().getTime()));
+                        data.add(timeFormat.format(event.getDate().getTime()));
+                        data.add(event.getDescription());
+                        data.add(event.getPlace());
+                        items = data.toArray(new String[data.size()]);
+                        writer.writeNext(items);
+                        data.clear();
+                    }
+
+                    writer.close();
+                }
+                catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 }

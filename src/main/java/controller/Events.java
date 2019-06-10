@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Klasa stanowiąca kontener na wydarzenia używana przy zapisie do formatu XML.
@@ -20,6 +21,9 @@ public class Events
 
     Events(){
         this.events = new ArrayList<>();
+    }
+    Events(ArrayList<Event> events){
+        this.setEvents(events);
     }
 
     public ArrayList<Event> getEvent() {
