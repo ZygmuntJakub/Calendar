@@ -4,14 +4,23 @@ import com.mysql.cj.jdbc.ServerPreparedStatement;
 
 import java.sql.*;
 
+/**
+ * Klasa odpowiada za połączenie za bazą danych
+ */
 public class DatabaseService {
 
+    /**
+     * Ścieżka do bazy danych
+     */
     private static final String dbPath = "jdbc:mysql://localhost:3306/calendar?serverTimezone=UTC&useSSL=false";
 
     private Connection con;
     private Statement stmt;
     private ResultSet rs;
 
+    /**
+     * Połączenie z bazą danych
+     */
     public void connect()
     {
         try
@@ -26,6 +35,9 @@ public class DatabaseService {
         }
     }
 
+    /**
+     * Rozłączenie z bazą danych
+     */
     public void disconnect()
     {
         if (con != null)
@@ -38,22 +50,11 @@ public class DatabaseService {
         }
     }
 
-    public Statement getStmt() {
-        return stmt;
-    }
-
-    public void setStmt(Statement stmt) {
-        this.stmt = stmt;
-    }
-
-    public ResultSet getRs() {
-        return rs;
-    }
-
-    public void setRs(ResultSet rs) {
-        this.rs = rs;
-    }
-
+    /**
+     * Wykonuje zapytanie do bazy danych i zwraca wynik
+     * @param sqlQuery zapytanie do bazy danych
+     * @return wynik zapytania
+     */
     public ResultSet executeQuery(String sqlQuery){
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -65,6 +66,11 @@ public class DatabaseService {
         }
         return resultSet;
     }
+
+    /**
+     * Aktualizuje aktualizację do bazy danych
+     * @param sqlQuery zapytanie do bazy danych
+     */
     public void executeUpdate(String sqlQuery){
         PreparedStatement preparedStatement = null;
         try {
@@ -74,6 +80,10 @@ public class DatabaseService {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Resetuje bazę danych, tworzy odpowiednią tabelę
+     */
     public void resetDatabase(){
         String drop = "DROP TABLE Events;";
         String create = "CREATE TABLE Events(event_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, title VARCHAR(100), description VARCHAR(250), date Datetime, alertBefore INTEGER, place VARCHAR(30));";

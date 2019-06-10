@@ -120,7 +120,7 @@ public class TuiStarter{
 		System.out.println("Podaj nazwę pliku.");
 		File file = new File(stringInput() + ".xml");
 		try {
-			XmlService.unMarshalingExample(file);
+			XmlService.importFromXmlFile(file);
 		} catch (JAXBException ex) {
 			ex.printStackTrace();
 		}
@@ -219,7 +219,7 @@ public class TuiStarter{
 		System.out.println("\nPodaj nazwę pliku");
 		File file = new File(stringInput() + ".xml");
 		try {
-			XmlService.marshalingExample(file);
+			XmlService.saveToXmlFile(file);
 		} catch (JAXBException ex) {
 			ex.printStackTrace();
 		}

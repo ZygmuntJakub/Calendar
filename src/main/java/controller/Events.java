@@ -8,12 +8,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 
-@XmlRootElement(name = "events")
-@XmlAccessorType(XmlAccessType.FIELD)
-
 /**
  * Klasa stanowiąca kontener na wydarzenia używana przy zapisie do formatu XML.
  */
+@XmlRootElement(name = "events")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Events
 {
     @XmlElement(name = "event")

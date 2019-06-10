@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+
 public class EventEditorWindow extends JFrame implements ListSelectionListener, ActionListener {
 
     private List<String> eventsTitles;

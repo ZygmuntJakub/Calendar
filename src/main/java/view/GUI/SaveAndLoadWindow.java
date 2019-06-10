@@ -95,7 +95,7 @@ public class SaveAndLoadWindow extends JFrame implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 try {
-                    XmlService.unMarshalingExample(file);
+                    XmlService.importFromXmlFile(file);
                 } catch (JAXBException ex) {
                     ex.printStackTrace();
                 }
@@ -106,7 +106,7 @@ public class SaveAndLoadWindow extends JFrame implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 try {
-                    XmlService.marshalingExample(file);
+                    XmlService.saveToXmlFile(file);
                 } catch (JAXBException ex) {
                     ex.printStackTrace();
                 }

@@ -11,16 +11,30 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
+/**
+ * Klasa odpowiada za zapis/odczyt danych XML
+ */
 public class XmlService {
 
-    public static void marshalingExample(File file) throws JAXBException
+    /**
+     * Zapis stanu aplikacji do XML
+     * @param file plik, do którego zostaną zapisane dane
+     * @throws JAXBException w razie błędu wystąpi wyjątek
+     */
+    public static void saveToXmlFile(File file) throws JAXBException
     {
         JAXBContext jaxbContext = JAXBContext.newInstance(Events.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         jaxbMarshaller.marshal(EventController.list, file);
     }
-    public static void unMarshalingExample(File file) throws JAXBException
+
+    /**
+     * Odczyt stanu aplikacji do XML
+     * @param file plik, z którego zostaną odczytane dane
+     * @throws JAXBException w razie błędu wystąpi wyjątek
+     */
+    public static void importFromXmlFile(File file) throws JAXBException
     {
         JAXBContext jaxbContext = JAXBContext.newInstance(Events.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
