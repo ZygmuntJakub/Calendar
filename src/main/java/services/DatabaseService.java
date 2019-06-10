@@ -83,13 +83,16 @@ public class DatabaseService {
 
     /**
      * Resetuje bazę danych, tworzy odpowiednią tabelę
+     * DELETE FROM Events;
      */
     public void resetDatabase(){
-        String drop = "DROP TABLE Events;";
-        String create = "CREATE TABLE Events(event_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, title VARCHAR(100), description VARCHAR(250), date Datetime, alertBefore INTEGER, place VARCHAR(30));";
+        //String drop = "DROP TABLE Events;";
+        //String create = "CREATE TABLE Events(event_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, title VARCHAR(100), description VARCHAR(250), date Datetime, alertBefore INTEGER, place VARCHAR(30));";
+        String delete = "DELETE FROM Events;";
         try {
-            stmt.executeUpdate(drop);
-            stmt.executeUpdate(create);
+//            stmt.executeUpdate(drop);
+//            stmt.executeUpdate(create);
+            stmt.executeUpdate(delete);
         } catch (SQLException e) {
             e.printStackTrace();
         }
