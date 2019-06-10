@@ -1,7 +1,6 @@
 package view.GUI;
 
 import com.opencsv.CSVWriter;
-import com.sun.tools.javac.Main;
 import model.Event;
 import services.CsvService;
 import view.ApplicationStarter;
@@ -53,7 +52,7 @@ public class Menu extends JMenuBar {
 
     private void setUpAuthors(){
         authors = new JMenuItem("O programie");
-        authors.setAccelerator(KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        authors.setAccelerator(KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         authors.getAccessibleContext().setAccessibleDescription(
                 "Informacje na temat autorów");
         authors.addActionListener(new ActionListener() {
@@ -67,7 +66,7 @@ public class Menu extends JMenuBar {
 
     private void setUpSave(){
         save = new JMenuItem("Zapisz/Odczytaj");
-        save.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        save.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         save.getAccessibleContext().setAccessibleDescription(
                 "Zapisz stan aplikacji");
         save.addActionListener(new ActionListener() {
@@ -80,7 +79,7 @@ public class Menu extends JMenuBar {
     }
     private void setUpSettings(){
         settings = new JMenuItem("Ustawienia");
-        settings.setAccelerator(KeyStroke.getKeyStroke('M', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        settings.setAccelerator(KeyStroke.getKeyStroke('M', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         settings.getAccessibleContext().setAccessibleDescription(
                 "ZUstawienia aplikacji");
         settings.addActionListener(new ActionListener() {
@@ -103,7 +102,7 @@ public class Menu extends JMenuBar {
     }
     private void exportToCsv(){
         csv = new JMenuItem("Eksportuj do CSV");
-        csv.setAccelerator(KeyStroke.getKeyStroke('E', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        csv.setAccelerator(KeyStroke.getKeyStroke('E', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         csv.getAccessibleContext().setAccessibleDescription(
                 "Eksportuj do CSV");
         csv.addActionListener(new ActionListener() {
