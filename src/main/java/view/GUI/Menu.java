@@ -60,7 +60,7 @@ public class Menu extends JMenuBar {
             public void actionPerformed(ActionEvent e) {
                 ImageIcon icon = new ImageIcon("icon.png");
                 JOptionPane.showMessageDialog(null, "Program wykonany na zajęcia\nProgramowanie Komponentowe\nAutorzy: \nJakub Nozderka\nJakub Zygmunt",
-                        "Autorzy", JOptionPane.INFORMATION_MESSAGE, icon);
+                        "O programie", JOptionPane.INFORMATION_MESSAGE, icon);
             }
         });
     }

@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 
 /**
- * Główne okno aplickacji
+ * Główne okno aplikacji
  */
 public class MainWindow extends JFrame {
 

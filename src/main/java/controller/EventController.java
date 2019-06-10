@@ -92,7 +92,7 @@ public class EventController implements RepoController<Event> {
 
     /**
      * Usuwanie wydarzeń starszych niż podana data
-     * @param calendar
+     * @param calendar data, przed którą zostaną usunięte wszystkie wydarzenia
      */
     public void deleteEventsOlderThan(Calendar calendar){
         for(int i = 0 ; i < list.getEvents().size() ; i++){
@@ -246,7 +246,7 @@ public class EventController implements RepoController<Event> {
 	@Override
 	public String toString() {
 		String string = new String();
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < list.getEvents().size(); i++) {
 			string += (i + 1) + ". " + this.getEvent(i).toString();
 		}
 		return string;

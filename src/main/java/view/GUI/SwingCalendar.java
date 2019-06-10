@@ -106,6 +106,10 @@ public class SwingCalendar extends JPanel {
         return compo;
     }
 
+    /**
+     * Ustawia kolor wydarzeń
+     * @param color kolor wydarzenia
+     */
     public void setColor(Color color) {
         this.color = color;
     }

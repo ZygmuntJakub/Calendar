@@ -17,7 +17,7 @@ import java.util.List;
 public class Events
 {
     @XmlElement(name = "event")
-    private ArrayList<Event> events = null;
+    private List<Event> events = null;
 
     Events(){
         this.events = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Events
         this.setEvents(events);
     }
 
-    public ArrayList<Event> getEvent() {
+    public List<Event> getEvent() {
         return this.events;
     }
     
@@ -34,7 +34,7 @@ public class Events
      * Zwraca listę wydarzeń.
      * @return Lista wydarzeń.
      */
-    public ArrayList<Event> getEvents() {
+    public List<Event> getEvents() {
         return this.events;
     }
     
@@ -42,11 +42,9 @@ public class Events
      * Ustawia nową listę wydarzeń.
      * @param event Nowa lista wydarzeń.
      */
-    public void setEvents(ArrayList<Event> event) {
+    public void setEvents(List<Event> event) {
         this.events = event;
     }
-    
-    public int size() {
-    	return events.size();
-    }
+
+
 }
