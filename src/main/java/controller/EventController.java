@@ -85,10 +85,10 @@ public class EventController implements RepoController<Event> {
 		long minutes;
 		int compare;
 		for (Event e : list.getEvents()) {
-			minutes = getDateDiff(Calendar.getInstance().getTime(), e.getDate().getTime(), TimeUnit.MINUTES);
+			minutes = getDateDiff(Calendar.getInstance().getTime(), e.getDate().getTime(), TimeUnit.MINUTES) + 1;
 			compare = e.getDate().compareTo(Calendar.getInstance());
-			if (minutes >= 0 && compare != -1 && minutes <= EventEditorWindow.MINUTES
-					&& e.getDuration() <= EventEditorWindow.MINUTES) {
+			if (minutes >= 0 && compare != -1 && minutes <= EventEditorWindow.MINUTES && minutes <= e.getDuration()
+					&& e.getDuration() <= EventEditorWindow.MINUTES && e.getDuration() >= 0) {
 				e.setDuration((int) minutes);
 				return e;
 			}

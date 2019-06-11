@@ -135,7 +135,7 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         editComponent.add(filter);
 
 
-        //twoorzenie split pane
+        //tworzenie split pane
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 listScrollPane, editComponent);
         splitPane.setOneTouchExpandable(true);
@@ -250,6 +250,8 @@ public class EventEditorWindow extends JFrame implements ListSelectionListener, 
         Timer timer = new Timer(300, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                eventsTitles.clear();
+                eventsTitles.addAll(ApplicationStarter.repoController.getAllTitles());
                 if (eventsTitles.size() == 0 || list.isSelectionEmpty()) {
                     save.setEnabled(false);
                 } else {

@@ -62,7 +62,7 @@ public class MainWindow extends JFrame {
 							"Zaplanowałeś wydarzenie: " + event.getTitle() + "\n" +
 							"na dzień " + event.getDate().getTime() + "\n" +
 							"zostało Ci " + event.getDuration() + "minut.");
-					event.setDuration(EventEditorWindow.MINUTES + 1);
+					event.setDuration(-1);
 				}
 			}
 		});

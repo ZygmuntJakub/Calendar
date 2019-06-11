@@ -72,9 +72,9 @@ public class TuiStarter{
 		int year, month, day, hourOfDay, minute;
 		System.out.println("Rok:");
 		year = intInput();
-		System.out.println("Miesi�c:");
+		System.out.println("Miesiąc:");
 		month = intInput() - 1;
-		System.out.println("Dzie�:");
+		System.out.println("Dzień:");
 		day = intInput();
 		if (time) {
 			System.out.println("Godzina:");
