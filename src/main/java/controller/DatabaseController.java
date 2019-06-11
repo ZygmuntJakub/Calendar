@@ -1,5 +1,6 @@
 package controller;
 
+import model.EmptyListException;
 import model.Event;
 import services.DatabaseService;
 import view.ApplicationStarter;
@@ -59,7 +60,12 @@ public class DatabaseController {
 	public void saveToDataBase() {
 		databaseService.connect();
 
-		List<Event> events = ApplicationStarter.repoController.getAll();
+		List<Event> events = null;
+		try {
+			events = ApplicationStarter.repoController.getAll();
+		} catch (EmptyListException e) {
+			e.printStackTrace();
+		}
 		String query;
 		databaseService.resetDatabase();
 		for (Event e : events) {

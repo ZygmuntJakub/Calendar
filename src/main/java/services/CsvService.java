@@ -1,6 +1,7 @@
 package services;
 
 import com.opencsv.CSVWriter;
+import model.EmptyListException;
 import model.Event;
 import view.ApplicationStarter;
 
@@ -36,15 +37,19 @@ public class CsvService {
             List<String> data = new ArrayList<>();
             SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy/MM/dd");
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
-            for (Event event : ApplicationStarter.repoController.getAll()) {
-                data.add(event.getTitle());
-                data.add(dataFormat.format(event.getDate().getTime()));
-                data.add(timeFormat.format(event.getDate().getTime()));
-                data.add(event.getDescription());
-                data.add(event.getPlace());
-                items = data.toArray(new String[data.size()]);
-                writer.writeNext(items);
-                data.clear();
+            try {
+                for (Event event : ApplicationStarter.repoController.getAll()) {
+                    data.add(event.getTitle());
+                    data.add(dataFormat.format(event.getDate().getTime()));
+                    data.add(timeFormat.format(event.getDate().getTime()));
+                    data.add(event.getDescription());
+                    data.add(event.getPlace());
+                    items = data.toArray(new String[data.size()]);
+                    writer.writeNext(items);
+                    data.clear();
+                }
+            } catch (EmptyListException e) {
+                e.printStackTrace();
             }
 
             writer.close();

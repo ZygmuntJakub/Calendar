@@ -1,5 +1,6 @@
 package view.TUI;
 
+import model.EmptyListException;
 import model.Event;
 import services.XmlService;
 import view.ApplicationStarter;
@@ -252,8 +253,13 @@ public class TuiStarter{
 		int choice = intInput();
 		if (choice == 0)
 			return;
-		else
-			modify(ApplicationStarter.repoController.getAll().get((choice - 1)));
+		else {
+			try {
+				modify(ApplicationStarter.repoController.getAll().get((choice - 1)));
+			} catch (EmptyListException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

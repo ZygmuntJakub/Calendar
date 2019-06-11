@@ -67,13 +67,9 @@ public class EventController implements RepoController<Event> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<Event> getAll() {
-		try {
+	public List<Event> getAll() throws EmptyListException {
 			if (list.getEvents().isEmpty())
 				throw new EmptyListException();
-		} catch (EmptyListException e) {
-			e.printStackTrace();
-		}
 		return list.getEvents();
 	}
 
@@ -101,12 +97,16 @@ public class EventController implements RepoController<Event> {
      * @param calendar data, przed którą zostaną usunięte wszystkie wydarzenia
      */
     public void deleteEventsOlderThan(Calendar calendar){
-        for(int i = getAll().size()-1 ; i >= 0; i--){
-            if(getAll().get(i).getDate().compareTo(calendar) == -1){
-                deleteEventByDateAndTitle(getAll().get(i).getDate(), getAll().get(i).getTitle());
-            }
-        }
-    }
+		try {
+			for(int i = getAll().size()-1 ; i >= 0; i--){
+				if(getAll().get(i).getDate().compareTo(calendar) == -1){
+					deleteEventByDateAndTitle(getAll().get(i).getDate(), getAll().get(i).getTitle());
+				}
+			}
+		} catch (EmptyListException e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 */
