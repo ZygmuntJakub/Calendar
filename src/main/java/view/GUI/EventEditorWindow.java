@@ -2,7 +2,7 @@ package view.GUI;
 
 import com.github.lgooddatepicker.components.TimePicker;
 import model.Event;
-import model.WrongEventValueException;
+import controller.WrongEventValueException;
 import view.ApplicationStarter;
 
 import javax.swing.*;

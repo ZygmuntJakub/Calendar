@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 /**
  * Wyjątek dla pustej listy.

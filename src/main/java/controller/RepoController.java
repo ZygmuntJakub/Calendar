@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
-import model.EmptyListException;
 import model.Event;
 
 /**
@@ -92,8 +91,8 @@ public interface RepoController<T> {
 
 	/**
 	 * Zwraca listę wszystkich wydarzeń.
-	 * 
-	 * @return Lista wydarzeń.
+	 * @return Lista wydarzeń
+	 * @throws EmptyListException zostaje rzucony gdy lista jest pusta
 	 */
 	public List<T> getAll() throws EmptyListException;
 

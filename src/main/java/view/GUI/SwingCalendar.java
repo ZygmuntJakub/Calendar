@@ -16,7 +16,7 @@ import java.util.GregorianCalendar;
  */
 public class SwingCalendar extends JPanel {
 	private static final long serialVersionUID = 4813505998973310750L;
-	JPanel jPanel;
+	private JPanel jPanel;
     private static JCalendar calendar = new JCalendar();
     private Calendar c;
     private Color color;
@@ -25,15 +25,11 @@ public class SwingCalendar extends JPanel {
      * Dodajemy odpowiednie komponenty z JCalendar
      */
     SwingCalendar() {
-        calendar.getDayChooser().setAlwaysFireDayProperty(false);
         c = Calendar.getInstance();
         color = Color.RED;
-
         changeVisible(false);
-
         jPanel = calendar.getDayChooser().getDayPanel();
         jPanel.setPreferredSize(new Dimension(800, 300));
-
         upDateEventsOnCalendar();
 
         JComponent yearChooser = calendar.getYearChooser();

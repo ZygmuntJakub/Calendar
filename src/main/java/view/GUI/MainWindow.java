@@ -40,17 +40,6 @@ public class MainWindow extends JFrame {
 		add(calendar);
 
 	}
-
-	public void changeBackground(Color color) {
-
-		this.getContentPane().setBackground(color);
-	}
-
-	private void setUpBar() {
-		pBar.setValue(0);
-		pBar.setStringPainted(true);
-	}
-
 	private void timerForAlert(){
 		Timer timer = new Timer(300, new ActionListener() {
 			@Override
@@ -88,5 +77,9 @@ public class MainWindow extends JFrame {
 		timer = new Timer(100, pBarLoading);
 		timer.setRepeats(true);
 		timer.start();
+	}
+	private void setUpBar() {
+		pBar.setValue(0);
+		pBar.setStringPainted(true);
 	}
 }

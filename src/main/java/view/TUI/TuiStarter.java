@@ -1,6 +1,6 @@
 package view.TUI;
 
-import model.EmptyListException;
+import controller.EmptyListException;
 import model.Event;
 import services.XmlService;
 import view.ApplicationStarter;
@@ -37,7 +37,7 @@ public class TuiStarter{
 	/**
 	 * Dodaje wydarzenie do listy wydarzeń.
 	 * 
-	 * @throws SQLException
+	 * @throws SQLException zostaje rzucony gdy wystąpi błąd przy komunikacji z bazą danych
 	 */
 	private static void addEvent() throws SQLException {
 		String title, description, place;
@@ -50,7 +50,7 @@ public class TuiStarter{
 		System.out.println("Podaj datę wydarzenia:");
 		date = dateInput(true);
 
-		System.out.println("Podaj czas trwania wydarzenia:");
+		System.out.println("Ile minut wcześniej poinformować o wydarzeniu?");
 		minutesOfDuration = intInput();
 
 		System.out.println("Podaj opis wydarzenia:");

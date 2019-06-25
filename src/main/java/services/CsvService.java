@@ -1,7 +1,7 @@
 package services;
 
 import com.opencsv.CSVWriter;
-import model.EmptyListException;
+import controller.EmptyListException;
 import model.Event;
 import view.ApplicationStarter;
 

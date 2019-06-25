@@ -1,6 +1,7 @@
 package services;
 
 import java.sql.*;
+import java.util.Calendar;
 
 /**
  * Klasa odpowiada za połączenie za bazą danych
@@ -14,6 +15,7 @@ public class DatabaseService {
 
     private Connection con;
     private Statement stmt;
+    private PreparedStatement preparedStatement;
 
     /**
      * Połączenie z bazą danych
@@ -41,6 +43,12 @@ public class DatabaseService {
         {
             try
             {
+                if(preparedStatement != null){
+                    preparedStatement.close();
+                }
+                if(stmt != null){
+                    stmt.close();
+                }
                 con.close();
             }
             catch(Exception e) {}
@@ -53,7 +61,6 @@ public class DatabaseService {
      * @return wynik zapytania
      */
     public ResultSet executeQuery(String sqlQuery){
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             preparedStatement = con.prepareStatement(sqlQuery);
@@ -65,13 +72,22 @@ public class DatabaseService {
     }
 
     /**
-     * Aktualizuje aktualizację do bazy danych
-     * @param sqlQuery zapytanie do bazy danych
+     *
+     * @param title tytuł wydarzenia
+     * @param desc opis wydarzenia
+     * @param date data wydarzenia
+     * @param place miejsce wydarzenia
+     * @param alert czas dla powiadomienia
      */
-    public void executeUpdate(String sqlQuery){
-        PreparedStatement preparedStatement = null;
+    public void executePreparedUpdate(String title, String desc, Calendar date, String place, Integer alert){
+
         try {
-            preparedStatement = con.prepareStatement(sqlQuery);
+            preparedStatement = con.prepareStatement("INSERT INTO Events(title, description, date, alertBefore, place) VALUES (?,?,?,?,?);");
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, desc);
+            preparedStatement.setTimestamp(3, new Timestamp(date.getTimeInMillis()));
+            preparedStatement.setInt(4, alert);
+            preparedStatement.setString(5,place);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,4 +110,6 @@ public class DatabaseService {
             e.printStackTrace();
         }
     }
+
+
 }

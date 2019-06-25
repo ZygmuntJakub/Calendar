@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 /**
  * Wyjątek występuje kiedy użytkownik wprowadzi błędne dane do formularza

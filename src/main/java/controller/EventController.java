@@ -1,8 +1,6 @@
 package controller;
 
-import model.EmptyListException;
 import model.Event;
-import model.NoEventException;
 import view.GUI.EventEditorWindow;
 
 import java.util.*;

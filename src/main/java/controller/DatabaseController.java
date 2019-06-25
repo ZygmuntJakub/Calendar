@@ -1,6 +1,5 @@
 package controller;
 
-import model.EmptyListException;
 import model.Event;
 import services.DatabaseService;
 import view.ApplicationStarter;
@@ -37,7 +36,7 @@ public class DatabaseController {
 			ResultSet rs = databaseService.executeQuery(query);
 
 			while (rs.next()) {
-				Timestamp timestamp = Timestamp.valueOf(rs.getString(4));
+				Timestamp timestamp = rs.getTimestamp(4);
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTimeInMillis(timestamp.getTime());
 				Event E = new Event(rs.getString(2), rs.getString(3), calendar, Integer.valueOf(rs.getString(5)),
@@ -66,13 +65,9 @@ public class DatabaseController {
 		} catch (EmptyListException e) {
 			e.printStackTrace();
 		}
-		String query;
 		databaseService.resetDatabase();
 		for (Event e : events) {
-			query = "INSERT INTO Events(title, description, date, alertBefore, place) VALUES ('" + e.getTitle() + "', '"
-					+ e.getDescription() + "', '" + new Timestamp(e.getDate().getTimeInMillis()) + "', '"
-					+ e.getDuration() + "', '" + e.getPlace() + "');";
-			databaseService.executeUpdate(query);
+			databaseService.executePreparedUpdate(e.getTitle(), e.getDescription(), e.getDate(), e.getPlace(), e.getDuration());
 		}
 
 		databaseService.disconnect();
