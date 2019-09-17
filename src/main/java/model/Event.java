@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * Klasa reprezentująca wydarzenie w kalendarzu
+ * Klasa reprezentująca wydarzenie w kalendarzu.
  */
 @XmlRootElement(name = "event")
 @XmlAccessorType(XmlAccessType.FIELD)
